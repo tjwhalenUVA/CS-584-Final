@@ -254,7 +254,7 @@ Decision Tree {data-navmenu="Methods"}
   <li>MeanFun & Q25 account for +75% of feature importance</li>
   <li>Better at identifying males</li>
   <li>Best model on untransformed data</li>
-  <li>[Tree](\C:\Users\e481340\Documents\GMU MASTERS\CS 584\CS584_Final\Trees\dt.pdf)</li>
+  <li>[Tree](https://github.com/tjwhalenUVA/CS-584-Final/blob/master/Trees/dt.pdf)</li>
 </ul>
 
 <b>Best Parameters</b>
