@@ -228,11 +228,67 @@ svm.pca_result.graph <-
 lr_cm <- cmGraph(lr$result)
 lr_result_dt <- resultsDT(df = resultsDF, model = 'Logistic Regression')
 
+
+lr$CVresult %>%
+  names()
+
+lr_result.graph <-
+  lr$CVresult %>%
+  select(param_C, 
+         param_fit_intercept, 
+         param_penalty, 
+         Mean = mean_test_score, 
+         Split_0 = split0_test_score, 
+         Split_1 = split1_test_score, 
+         Split_2 = split2_test_score, 
+         Split_3 = split3_test_score, 
+         Split_4 = split4_test_score) %>%
+  mutate(extra_param = paste(param_fit_intercept, 
+                             param_penalty, 
+                             sep=', ')) %>%
+  select(-param_fit_intercept, 
+         -param_penalty) %>%
+  gather(Split, Score, -param_C, -extra_param) %>%
+  mutate(Split = paste(Split, extra_param, sep=' - ')) %>%
+  select(-extra_param) %>%
+  ggplot(aes(x=param_C, y=Score, color=Split)) +
+  geom_line() +
+  theme_classic() +
+  scale_y_continuous(labels = scales::percent) +
+  labs(title='Cross Validation Test Scores', 
+       x='Penalty Parameter (C)', 
+       y='Test Score')
+
 #LR (PCA)====
 lr.norm_cm <- cmGraph(lr.norm$result)
 lr.norm_result_dt <- resultsDT(df = resultsDF, model = 'Logistic Regression (Normal)')
 
-
+lr.norm_result.graph <-
+  lr.norm$CVresult %>%
+  select(param_C, 
+         param_fit_intercept, 
+         param_penalty, 
+         Mean = mean_test_score, 
+         Split_0 = split0_test_score, 
+         Split_1 = split1_test_score, 
+         Split_2 = split2_test_score, 
+         Split_3 = split3_test_score, 
+         Split_4 = split4_test_score) %>%
+  mutate(extra_param = paste(param_fit_intercept, 
+                             param_penalty, 
+                             sep=', ')) %>%
+  select(-param_fit_intercept, 
+         -param_penalty) %>%
+  gather(Split, Score, -param_C, -extra_param) %>%
+  mutate(Split = paste(Split, extra_param, sep=' - ')) %>%
+  select(-extra_param) %>%
+  ggplot(aes(x=param_C, y=Score, color=Split)) +
+  geom_line() +
+  theme_classic() +
+  scale_y_continuous(labels = scales::percent) +
+  labs(title='Cross Validation Test Scores', 
+       x='Penalty Parameter (C)', 
+       y='Test Score')
 
 
 

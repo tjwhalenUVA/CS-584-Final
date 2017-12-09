@@ -333,7 +333,8 @@ X_train_norm, X_test_norm, y_train_norm, y_test_norm = train_test_split(Xnorm,
 
 print('Log Reg')
 lrparams = {'penalty' : ['l1', 'l2'], 
-            'C': np.arange(0.05, 0.5, 0.05)}
+            'C': np.arange(0.05, 1.0, 0.05), 
+            'fit_intercept': [True, False]}
 
 lrsearch = GridSearchCV(estimator=LogisticRegression(), 
                          param_grid=lrparams, 
@@ -349,6 +350,9 @@ lr_roc = pd.DataFrame({'fpr': score_roc[0],
                        'tpr': score_roc[1]})
 
 lr_auc = pd.DataFrame({'auc': [auc(score_roc[0], score_roc[1])]})
+
+lrCVresult = pd.DataFrame(lrsearch.cv_results_)
+
 
 #Save Results
 print('    Save Results')
@@ -374,6 +378,10 @@ lr_roc.to_excel(writer,
 
 lr_auc.to_excel(writer, 
                    sheet_name='auc', 
+                   index=False)
+
+lrCVresult.to_excel(writer, 
+                   sheet_name='CVresult', 
                    index=False)
 
 
@@ -535,7 +543,7 @@ X_train_pca, X_test_pca, y_train_pca, y_test_pca = train_test_split(x_norm,
 
 print('Log Reg Norm')
 lrparams = {'penalty' : ['l1', 'l2'], 
-            'C': np.arange(0.05, 0.5, 0.05), 
+            'C': np.arange(0.05, 1, 0.05), 
             'fit_intercept': [True, False]}
 
 lrsearch = GridSearchCV(estimator=LogisticRegression(), 
@@ -554,6 +562,8 @@ lr_roc = pd.DataFrame({'fpr': score_roc[0],
                        'tpr': score_roc[1]})
 
 lr_auc = pd.DataFrame({'auc': [auc(score_roc[0], score_roc[1])]})
+
+lrCVresult = pd.DataFrame(lrsearch.cv_results_)
 
 #Save Results
 print('    Save Results')
@@ -579,6 +589,10 @@ lr_roc.to_excel(writer,
 
 lr_auc.to_excel(writer, 
                 sheet_name='auc', 
+                index=False)
+
+lrCVresult.to_excel(writer, 
+                sheet_name='CVresult', 
                 index=False)
 
 writer.save()

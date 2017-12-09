@@ -243,6 +243,13 @@ lr$auc <- read_excel(paste(mainFolder,
                      sheet = "auc"
 )
 
+lr$CVresult <- read_excel(paste(mainFolder, 
+                                 "/results/lr_results.xlsx", 
+                                 sep = ""), 
+                           sheet = "CVresult"
+)
+
+
 
 #Log Regression (PCA)====
 lr.norm <- NULL
@@ -271,4 +278,10 @@ lr.norm$auc <- read_excel(paste(mainFolder,
                                 "/results/lr_pca_results.xlsx", 
                                 sep = ""), 
                           sheet = "auc"
+)
+
+lr.norm$CVresult <- read_excel(paste(mainFolder, 
+                                "/results/lr_pca_results.xlsx", 
+                                sep = ""), 
+                          sheet = "CVresult"
 )
