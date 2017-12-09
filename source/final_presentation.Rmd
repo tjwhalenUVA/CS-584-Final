@@ -253,7 +253,7 @@ Decision Tree {data-navmenu="Methods"}
   <li>Used untransformed data</li>
   <li>MeanFun & Q25 account for +75% of feature importance</li>
   <li>Better at identifying males</li>
-  <li>Best model on untransformed data</li>
+  <li>Easiest to interpret</li>
   <li>[Tree](https://github.com/tjwhalenUVA/CS-584-Final/blob/master/Trees/dt.pdf)</li>
 </ul>
 
@@ -294,7 +294,7 @@ SVM {data-navmenu="Methods"}
 ###
 <b>Summary</b>
 <ul>
-  <li></li>
+  <li>Modified penalty parameter to acheive better results</li>
   <li></li>
   <li></li>
   <li></li>
@@ -315,9 +315,10 @@ ggplotly(svm_cm) %>%
 
 ## Column
 
-### Parameters
+###
 ```{r}
-
+ggplotly(svm_result.graph) %>%
+  config(displayModeBar = F)
 ```
 
 ### Results
@@ -334,7 +335,7 @@ Log Reg {data-navmenu="Methods"}
 ###
 <b>Summary</b>
 <ul>
-  <li></li>
+  <li>Best Male accuracy</li>
   <li></li>
   <li></li>
   <li></li>
@@ -375,8 +376,8 @@ Random Forest {data-navmenu="Methods"}
 ###
 <b>Summary</b>
 <ul>
-  <li>Best overall accuracy using raw data</li>
-  <li></li>
+  <li>Best overall accuracy</li>
+  <li>Best Female accuracy</li>
   <li></li>
   <li></li>
   <li></li>
@@ -477,9 +478,10 @@ ggplotly(svm.pca_cm) %>%
 
 ## Column
 
-### Parameters
+###
 ```{r}
-
+ggplotly(svm.pca_result.graph) %>%
+  config(displayModeBar = F)
 ```
 
 ### Results

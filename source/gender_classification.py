@@ -13,6 +13,12 @@ import numpy as np
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.svm import SVC
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
+
+
+from sklearn import preprocessing
+from sklearn.decomposition import PCA
 
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import accuracy_score, roc_curve, auc
@@ -186,7 +192,6 @@ writer.save()
 
 
 #%% Random Forest
-from sklearn.ensemble import RandomForestClassifier
 print('RF')
 rfparams = {"n_estimators": np.arange(5,15), 
             "max_depth": np.arange(1,30), 
@@ -252,7 +257,7 @@ writer.save()
 
 #%% SVM
 print('SVM')
-svmparams = {'C': np.arange(4, 6.1, 0.1)}
+svmparams = {'C': np.arange(10, 50, 1)}
 
 svmsearch = GridSearchCV(estimator=SVC(), 
                          param_grid=svmparams, 
@@ -274,6 +279,8 @@ svm_roc = pd.DataFrame({'fpr': score_roc[0],
                        'tpr': score_roc[1]})
 
 svm_auc = pd.DataFrame({'auc':[auc(svm_roc.fpr, svm_roc.tpr)]})
+
+svmCVresult = pd.DataFrame(svmsearch.cv_results_)
 
 #Save Results
 print('    Save Results')
@@ -301,14 +308,14 @@ svm_auc.to_excel(writer,
                 sheet_name='auc', 
                 index=False)
 
+svmCVresult.to_excel(writer, 
+                     sheet_name='CVresult', 
+                     index=False)
+
 writer.save()
 
 
 #%%Logistic Regression
-from sklearn.linear_model import LogisticRegression
-#Normalize
-from sklearn import preprocessing
-
 colNames = df.columns
 colNames = colNames.drop('label')
 
@@ -377,8 +384,6 @@ writer.save()
 
 
 #%%KNN
-from sklearn.decomposition import PCA
-
 pcadf = PCA(n_components=9).fit(Xnorm.T).components_.T
 X_train_pca, X_test_pca, y_train_pca, y_test_pca = train_test_split(pcadf, 
                                                     df.label, 
@@ -460,7 +465,7 @@ X_train_pca, X_test_pca, y_train_pca, y_test_pca = train_test_split(pcadf,
                                                     random_state=0)
 
 print('SVM PCA')
-svmparams = {'C': np.arange(1, 12, 0.5)}
+svmparams = {'C': np.arange(5, 50, 1)}
 
 svmsearch = GridSearchCV(estimator=SVC(), 
                          param_grid=svmparams, 
@@ -481,6 +486,8 @@ svm_roc = pd.DataFrame({'fpr': score_roc[0],
                        'tpr': score_roc[1]})
 
 svm_auc = pd.DataFrame({'auc': [auc(score_roc[0], score_roc[1])]})
+
+svmCVresult = pd.DataFrame(svmsearch.cv_results_)
 
 #Save Results
 print('    Save Results')
@@ -507,13 +514,14 @@ svm_roc.to_excel(writer,
 svm_auc.to_excel(writer, 
                 sheet_name='auc', 
                 index=False)
+
+svmCVresult.to_excel(writer, 
+                     sheet_name='CVresult', 
+                     index=False)
 writer.save()
 
 
 #%%Logistic Regression
-
-from sklearn import preprocessing
-
 x = df.drop('label', axis=1).values #returns a numpy array
 min_max_scaler = preprocessing.MinMaxScaler()
 x_scaled = min_max_scaler.fit_transform(x)

@@ -137,6 +137,12 @@ svm$auc <- read_excel(paste(mainFolder,
                       sheet = "auc"
 )
 
+svm$CVresult <- read_excel(paste(mainFolder, 
+                            "/results/svm_results.xlsx", 
+                            sep = ""), 
+                      sheet = "CVresult"
+)
+
 #KNN PCA====
 knn.pca <- NULL
 
@@ -199,6 +205,12 @@ svm.pca$auc <- read_excel(paste(mainFolder,
                                 "/results/svm_pca_results.xlsx", 
                                 sep = ""), 
                           sheet = "auc"
+)
+
+svm.pca$CVresult <- read_excel(paste(mainFolder, 
+                                 "/results/svm_pca_results.xlsx", 
+                                 sep = ""), 
+                           sheet = "CVresult"
 )
 
 

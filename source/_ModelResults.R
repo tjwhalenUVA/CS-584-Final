@@ -165,7 +165,8 @@ dt_feature.graph <-
   unique(.) %>%
   ggplot(aes(x = reorder(feature_name, -feature_importance))) +
   geom_bar(aes(y=feature_importance), 
-           stat = 'identity') +
+           stat = 'identity', 
+           fill='blue') +
   theme_classic() +
   theme(axis.text.x = element_text(angle = 45, 
                                    hjust = 1)) +
@@ -183,9 +184,45 @@ rf_result_dt <- resultsDT(df = resultsDF, model = 'Random Forest')
 svm_cm <- cmGraph(svm$result)
 svm_result_dt <- resultsDT(df = resultsDF, model = 'Support Vector Machine')
 
-#KNN PCA====
+svm_result.graph <-
+  svm$CVresult %>%
+  select(param_C, 
+         Mean = mean_test_score, 
+         Split_0 = split0_test_score, 
+         Split_1 = split1_test_score, 
+         Split_2 = split2_test_score, 
+         Split_3 = split3_test_score, 
+         Split_4 = split4_test_score) %>%
+  gather(Split, Score, -param_C) %>%
+  ggplot(aes(x=param_C, y=Score, color=Split)) +
+  geom_line() +
+  theme_classic() +
+  scale_y_continuous(labels = scales::percent) +
+  labs(title='Cross Validation Test Scores', 
+       x='Penalty Parameter (C)', 
+       y='Test Score')
+
+#SVM PCA====
 svm.pca_cm <- cmGraph(svm.pca$result)
 svm.pca_result_dt <- resultsDT(df = resultsDF, model = 'Support Vector Machine (PCA)')
+
+svm.pca_result.graph <-
+  svm.pca$CVresult %>%
+  select(param_C, 
+         Mean = mean_test_score, 
+         Split_0 = split0_test_score, 
+         Split_1 = split1_test_score, 
+         Split_2 = split2_test_score, 
+         Split_3 = split3_test_score, 
+         Split_4 = split4_test_score) %>%
+  gather(Split, Score, -param_C) %>%
+  ggplot(aes(x=param_C, y=Score, color=Split)) +
+  geom_line() +
+  theme_classic() +
+  scale_y_continuous(labels = scales::percent) +
+  labs(title='Cross Validation Test Scores', 
+       x='Penalty Parameter (C)', 
+       y='Test Score')
 
 #LR====
 lr_cm <- cmGraph(lr$result)
