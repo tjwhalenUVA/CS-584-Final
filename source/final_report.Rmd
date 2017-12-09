@@ -1,0 +1,176 @@
+---
+title: "CS 584 Final - Fall 2017"
+author: "Jake Whalen"
+date: "November 21, 2017"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+source('_Packages.R')
+source('_Data.R')
+source('_EDA.R')
+source('_ModelResults.R')
+```
+
+# Executive Summary
+
+Summary of purpose/results
+
+# Motivation
+
+# Data
+
+## Overview
+There are +3,000 labelled records. The data contains 20 Features such as mean frequency, skewness, spectral entropy and average of fundamental frequency measured across acoustic signal. The goal is to predict whether a voice is male or female. A follow up goal is to determine what characteristics help distinguish between genders in the dataset.
+
+The data was downloaded from <https://www.kaggle.com/primaryobjects/voicegender>. 
+
+
+
+# Approach
+
+EDA
+
+Machine Learning
+
+Evaluation
+
+# Exploratory Data Analysis
+
+#### Classes
+
+```{r, fig.height=3, fig.width=3}
+genderCount
+```
+
+
+#### Visualize
+
+###### Distributions
+
+```{r, fig.height=7, fig.width=7}
+allDensity
+```
+
+###### Boxplot
+
+```{r, fig.height=7, fig.width=7}
+allBoxPlot
+```
+
+###### Heatmap
+
+```{r, fig.height=7, fig.width=7}
+ggheatmap
+```
+
+###### Scatter Plot
+
+```{r, fig.height=7, fig.width=7}
+oneVall
+```
+
+Also discuss 3D
+
+#### Statistical Testing
+
+
+# Classification
+
+#### Machine Learning
+
+###### Python
+
+###### Scikit Learn
+
+#### K-Nearest Neighbors
+
+Confusion Matrix
+```{r, fig.height=3, fig.width=4}
+knn_cm + theme(legend.position = 'none')
+```
+
+Cross Validation Results
+```{r, fig.height=3, fig.width=5}
+knn_score.graph
+```
+
+
+#### Decision Tree
+
+Confusion Matrix
+```{r, fig.height=3, fig.width=4}
+dt_cm + theme(legend.position = 'none')
+```
+
+Feature Importance
+```{r, fig.height=3, fig.width=4}
+dt_feature.graph
+```
+
+#### Support Vector Machine
+
+Confusion Matrix
+```{r, fig.height=3, fig.width=4}
+svm_cm + theme(legend.position = 'none')
+```
+
+
+```{r, fig.height=3, fig.width=4}
+
+```
+
+#### Logistic Regression
+
+Confusion Matrix
+```{r, fig.height=3, fig.width=4}
+
+```
+
+
+```{r, fig.height=3, fig.width=4}
+
+```
+
+#### K-Nearest Neighbors (PCA)
+
+Confusion Matrix
+```{r, fig.height=3, fig.width=4}
+knn.pca_cm + theme(legend.position = 'none')
+```
+
+Cross Validation Results
+```{r, fig.height=3, fig.width=5}
+knn.pca_score.graph
+```
+
+#### Random Forest
+
+Confusion Matrix
+```{r, fig.height=3, fig.width=4}
+rf_cm + theme(legend.position = 'none')
+```
+
+
+```{r, fig.height=3, fig.width=4}
+
+```
+
+#### Support Vector Machine (PCA)
+
+Confusion Matrix
+```{r, fig.height=3, fig.width=4}
+svm.pca_cm + theme(legend.position = 'none')
+```
+
+
+```{r, fig.height=3, fig.width=4}
+
+```
+
+
+# Conclusions
+
+
+

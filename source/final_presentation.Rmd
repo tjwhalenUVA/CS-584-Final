@@ -1,0 +1,569 @@
+---
+title: "Voice Recognition"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+css: style.css
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+source('_Packages.R')
+source('_Data.R')
+source('_EDA.R')
+source('_ModelResults.R')
+```
+
+Home
+=====================================
+
+## Column
+<h1><b><center>Gender Classification via Voice</center></b></h1>
+<h3><b><center>Jake Whalen</center></b></h3>
+<h5><b><center>CS 584 Final Project</center></b></h5>
+<h5><b><center>Fall 2017</center></b></h5>
+<b><center>[Start](#summary)</center></b>
+
+Summary
+=====================================
+## Column
+### <b>Choosing a Project</b> {data-height=3}
+<ul>
+  <li>Topic? Sports, Beer, Other </li>
+  <li>Supervised or unsupervised learning?</li>
+  <li>Data Source: Download, Web Scrape, Social Media</li>
+  <li>Tools: Python, R, Weka, Tableau, Excel</li>
+</ul>
+
+### <b>Choice</b> {data-height=4}
+<ul>
+  <li>Data from Kaggle</li>
+  <li>Audio Analysis</li>
+  <li>Supervised Learning</li>
+  <li>Classification</li>
+  <li>ML in Python</li>
+  <li>Presentation & Report in R Markdown</li>
+  <li>Excel for results transfer</li>
+</ul>
+
+### <b>Goals</b> {data-height=2}
+<ul>
+  <li>Classify audio clip subjects gender</li>
+  <li>Learn what features best seperate gender in audio</li>
+  <li>Look for other potential clusters within the data</li>
+</ul>
+
+Method
+=====================================
+
+## Column
+
+### <b>Exploration</b>
+<ol>
+  <li>Read the data into R/Python</li>
+  <li>Ran summary functions on features</li>
+  <li>Plotted the data</li>
+  <li>Look for patterns and relationships between features</li>
+  <li>Determine what features seperate gender best</li>
+</ol>
+
+###
+```{r}
+ggplotly(scatterSample) %>%
+  layout(showlegend = FALSE) %>% 
+  config(displayModeBar = F)
+```
+
+## Column
+
+### <b>Classification</b>
+<ol>
+  <li>Used Scikit-learn in Python</li>
+  <li>Split the data for training/testing (1/3, 2/3)</li>
+  <li>Used gridsearch to identify the best parameters</li>
+  <li>KNN (K-Nearest Neighbors)</li>
+  <li>Decision Tree (DT)</li>
+  <li>Suport Vector Machine (SVM)</li>
+  <li>Observed prediction outcomes. Could do better.</li>
+  <li>Attempt to Improve on initial results</li>
+  <li>KNN: Transform data with PCA</li>
+  <li>Decision Tree: Use multiple trees with Random Forest</li>
+  <li>SVM: Transform data with PCA</li>
+</ol>
+
+## Column
+
+### <b>Review</b>
+<ul>
+  <li>Confusion Matrix</li>
+  <li>Overall Accuracy Scores</li>
+  <li>Male Accuracy</li>
+  <li>Female Accuracy</li>
+  <li>Parameter Influence</li>
+  <li>Graph Results</li>
+</ul>
+
+###
+```{r}
+ggplotly(knn_cm) %>%
+  layout(showlegend = FALSE) %>% 
+  config(displayModeBar = F)
+```
+
+Overview {data-navmenu="Data"}
+=====================================
+
+## Column {.tabset}
+
+### Description
+<b>Dataset Comments</b>
+<ul>
+  <li>Database created to identify a voice as male or female, based upon acoustic properties of the voice and speech.</li>
+  <li>The dataset consists of 3,168 recorded voice samples, collected from male and female speakers.</li>
+  <li>The voice samples are pre-processed by acoustic analysis in R using the seewave and tuneR packages, with an analyzed frequency range of 0hz-280hz (human vocal range).</li>
+  <li>The samples are represented by 21 different features</li>
+  <li>Source: <a href="https://www.kaggle.com/primaryobjects/voicegender" target="_blank">Voice Gender Data</a></li>
+</ul>
+
+### Definitions
+```{r definitionsTable}
+definitions %>%
+  datatable(., 
+            rownames=F, 
+            options = list(paging=F, 
+                           dom = 't'))
+```
+
+
+### Sample
+
+```{r sampleView}
+voice %>%
+  head(., n=20) %>%
+  datatable(., 
+            rownames=F, 
+            options = list(paging=F, 
+                           dom = 't'))
+```
+
+EDA {data-navmenu="Data"}
+=====================================
+
+## Column {.tabset}
+
+### Classes
+```{r}
+genderCount
+```
+
+
+### Distributions
+
+```{r Distributions}
+allDensity
+```
+
+### Boxplots
+
+```{r}
+allBoxPlot
+```
+
+
+### T Test
+```{r}
+tTestDT
+```
+
+
+### Heatmap
+
+```{r summary}
+ggheatmap
+```
+
+### Scatter Plot
+
+```{r Scatterplot}
+oneVall
+```
+
+### 3D Plot
+
+```{r 3D}
+p
+```
+
+
+KNN {data-navmenu="Methods"}
+=====================================
+
+## Column
+
+<h4><b><center>K-Nearest Neighbors</center></b></h4>
+
+###
+<b>Summary</b>
+<ul>
+  <li>Used untransformed data</li>
+  <li>Better then a dumb classifier</li>
+  <li>Manhattan Distance produced better CV results (p=1)</li>
+  <li>Distance weights outperformed uniform weights</li>
+  <li>Better at identifying males</li>
+</ul>
+
+<b>Best Parameters</b>
+<ul>
+  <li>`r best_params(knn)`</li>
+</ul>
+
+### Confusion Matrix
+```{r}
+ggplotly(knn_cm) %>%
+  layout(showlegend = FALSE) %>% 
+  config(displayModeBar = F)
+```
+
+## Column
+
+###
+```{r}
+ggplotly(knn_score.graph) %>% 
+  config(displayModeBar = F)
+```
+
+### Results
+```{r}
+knn_result_dt
+```
+
+
+
+Decision Tree {data-navmenu="Methods"}
+=====================================
+
+## Column
+
+<h4><b><center>Decision Tree</center></b></h4>
+
+###
+<b>Summary</b>
+<ul>
+  <li>Used untransformed data</li>
+  <li>MeanFun & Q25 account for +75% of feature importance</li>
+  <li>Better at identifying males</li>
+  <li>Best model on untransformed data</li>
+  <li>[Tree](\C:\Users\e481340\Documents\GMU MASTERS\CS 584\CS584_Final\Trees\dt.pdf)</li>
+</ul>
+
+<b>Best Parameters</b>
+<ul>
+  <li>`r best_params(dt)`</li>
+</ul>
+
+
+
+### Confusion Matrix
+```{r}
+ggplotly(dt_cm) %>%
+  layout(showlegend = FALSE) %>% 
+  config(displayModeBar = F)
+```
+
+## Column
+
+###
+```{r}
+ggplotly(dt_feature.graph) %>%
+  layout(showlegend = FALSE) %>% 
+  config(displayModeBar = F)
+```
+
+### Results
+```{r}
+dt_result_dt
+```
+
+SVM {data-navmenu="Methods"}
+=====================================
+## Column
+
+<h4><b><center>Support Vector Machine</center></b></h4>
+
+###
+<b>Summary</b>
+<ul>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+</ul>
+
+<b>Best Parameters</b>
+<ul>
+  <li>`r best_params(svm)`</li>
+</ul>
+
+### Confusion Matrix
+```{r}
+ggplotly(svm_cm) %>%
+  layout(showlegend = FALSE) %>% 
+  config(displayModeBar = F)
+```
+
+## Column
+
+### Parameters
+```{r}
+
+```
+
+### Results
+```{r}
+svm_result_dt
+```
+
+Log Reg {data-navmenu="Methods"}
+=====================================
+## Column
+
+<h4><b><center>Logistic Regression</center></b></h4>
+
+###
+<b>Summary</b>
+<ul>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+</ul>
+
+<b>Best Parameters</b>
+<ul>
+  <li>`r best_params(lr)`</li>
+</ul>
+
+### Confusion Matrix
+```{r}
+ggplotly(lr_cm) %>%
+  layout(showlegend = FALSE) %>% 
+  config(displayModeBar = F)
+```
+
+## Column
+
+### Parameters
+```{r}
+
+```
+
+### Results
+```{r}
+lr_result_dt
+```
+
+Random Forest {data-navmenu="Methods"}
+=====================================
+
+## Column
+
+<h4><b><center>Random Forest</center></b></h4>
+
+###
+<b>Summary</b>
+<ul>
+  <li>Best overall accuracy using raw data</li>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+</ul>
+
+<b>Best Parameters</b>
+<ul>
+  <li>`r best_params(rf)`</li>
+</ul>
+
+### Confusion Matrix
+```{r}
+ggplotly(rf_cm) %>%
+  layout(showlegend = FALSE) %>% 
+  config(displayModeBar = F)
+```
+
+## Column
+
+### Parameters
+```{r}
+
+```
+
+### Results
+```{r}
+rf_result_dt
+```
+
+KNN (PCA) {data-navmenu="Methods"}
+=====================================
+## Column
+
+<h4><b><center>K-Nearest Neighbors (PCA)</center></b></h4>
+
+###
+<b>Summary</b>
+<ul>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+</ul>
+
+<b>Best Parameters</b>
+<ul>
+  <li>`r best_params(knn.pca)`</li>
+</ul>
+
+### Confusion Matrix
+```{r}
+ggplotly(knn.pca_cm) %>%
+  layout(showlegend = FALSE) %>% 
+  config(displayModeBar = F)
+```
+
+## Column
+
+###
+```{r}
+ggplotly(knn.pca_score.graph) %>%
+  config(displayModeBar = F)
+```
+
+### Results
+```{r}
+knn.pca_result_dt
+```
+
+SVM (PCA) {data-navmenu="Methods"}
+=====================================
+## Column
+
+<h4><b><center>Support Vector Machine (PCA)</center></b></h4>
+
+###
+<b>Summary</b>
+<ul>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+</ul>
+
+<b>Best Parameters</b>
+<ul>
+  <li>`r best_params(svm.pca)`</li>
+</ul>
+
+### Confusion Matrix
+```{r}
+ggplotly(svm.pca_cm) %>%
+  layout(showlegend = FALSE) %>% 
+  config(displayModeBar = F)
+```
+
+## Column
+
+### Parameters
+```{r}
+
+```
+
+### Results
+```{r}
+svm.pca_result_dt
+```
+
+Log Reg (Normal) {data-navmenu="Methods"}
+=====================================
+## Column
+
+<h4><b><center>Logistic Regression (PCA)</center></b></h4>
+
+###
+<b>Summary</b>
+<ul>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+</ul>
+
+<b>Best Parameters</b>
+<ul>
+  <li>`r best_params(lr.norm)`</li>
+</ul>
+
+### Confusion Matrix
+```{r}
+ggplotly(lr.norm_cm) %>%
+  layout(showlegend = FALSE) %>% 
+  config(displayModeBar = F)
+```
+
+## Column
+
+### Parameters
+```{r}
+
+```
+
+### Results
+```{r}
+lr.norm_result_dt
+```
+
+
+Conclusions {.storyboard}
+=====================================
+
+### Criteria
+```{r}
+ggplotly(model_criteria) %>%
+  config(displayModeBar = F)
+```
+
+***
+Discuss criteria. 
+Females hard to get right. 
+Males easier.
+
+### ROC
+```{r}
+ggplotly(model_roc) %>%
+  config(displayModeBar = F)
+```
+
+***
+Inital models were bad. 
+Transforming data and using alternate algorithms improved performance.
+
+### Findings
+<ul>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+</ul>
+
+
+
+
+

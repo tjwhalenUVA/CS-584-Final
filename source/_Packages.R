@@ -1,0 +1,8 @@
+suppressMessages(library(readr))
+suppressMessages(library(tidyverse))
+suppressMessages(library(magrittr))
+suppressMessages(library(reshape2))
+suppressMessages(library(plotly))
+suppressMessages(library(DT))
+suppressMessages(library(readxl))
+suppressMessages(library(plotly))
