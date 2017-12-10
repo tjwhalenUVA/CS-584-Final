@@ -193,8 +193,8 @@ writer.save()
 
 #%% Random Forest
 print('RF')
-rfparams = {"n_estimators": np.arange(5,15), 
-            "max_depth": np.arange(1,30), 
+rfparams = {"n_estimators": np.arange(5,30), 
+            "max_depth": np.arange(1,15), 
             "criterion": ['gini', 'entropy']}
 
 rfsearch = GridSearchCV(estimator=RandomForestClassifier(), 
@@ -227,6 +227,9 @@ rf_auc = pd.DataFrame({'auc':[auc(fpr, tpr)]})
 #rfDF = hp.rfDFGenerator(rfsearch.best_estimator_.tree_, 
 #                        X_train)
 
+
+rfCVresult = pd.DataFrame(rfsearch.cv_results_)
+
 #Save Results
 print('    Save Results')
 rfparams = hp.bestParamDF(rfsearch)
@@ -252,6 +255,10 @@ rf_roc.to_excel(writer,
 rf_auc.to_excel(writer, 
                    sheet_name='auc', 
                    index=False)
+
+rfCVresult.to_excel(writer, 
+                     sheet_name='CVresult', 
+                     index=False)
 
 writer.save()
 
@@ -398,7 +405,7 @@ X_train_pca, X_test_pca, y_train_pca, y_test_pca = train_test_split(pcadf,
                                                     test_size=0.33,
                                                     random_state=0)
 #print('KNN PCA')
-knnparams = {'n_neighbors': np.arange(3, 21, 2), 
+knnparams = {'n_neighbors': np.arange(1, 31, 2), 
              'weights': ['uniform', 'distance'], 
              'algorithm': ['auto', 'ball_tree', 
                            'kd_tree', 'brute'],

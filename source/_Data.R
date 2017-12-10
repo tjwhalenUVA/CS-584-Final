@@ -108,6 +108,12 @@ rf$auc <- read_excel(paste(mainFolder,
                      sheet = "auc"
 )
 
+rf$CVresult <- read_excel(paste(mainFolder, 
+                           "/results/rf_results.xlsx", 
+                           sep = ""), 
+                     sheet = "CVresult"
+)
+
 #SVM====
 svm <- NULL
 

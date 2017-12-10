@@ -28,15 +28,16 @@ Home
 Summary
 =====================================
 ## Column
-### <b>Choosing a Project</b> {data-height=3}
+### 
+<font size="6"><b>Choosing a Project</b></font>
 <ul>
   <li>Topic? Sports, Beer, Other </li>
   <li>Supervised or unsupervised learning?</li>
   <li>Data Source: Download, Web Scrape, Social Media</li>
   <li>Tools: Python, R, Weka, Tableau, Excel</li>
 </ul>
-
-### <b>Choice</b> {data-height=4}
+<br>
+<font size="6"><b>Choice</b></font>
 <ul>
   <li>Data from Kaggle</li>
   <li>Audio Analysis</li>
@@ -46,8 +47,8 @@ Summary
   <li>Presentation & Report in R Markdown</li>
   <li>Excel for results transfer</li>
 </ul>
-
-### <b>Goals</b> {data-height=2}
+<br>
+<font size="6"><b>Goals</b></font>
 <ul>
   <li>Classify audio clip subjects gender</li>
   <li>Learn what features best seperate gender in audio</li>
@@ -218,7 +219,7 @@ KNN {data-navmenu="Methods"}
   <li>`r best_params(knn)`</li>
 </ul>
 
-### Confusion Matrix
+###
 ```{r}
 ggplotly(knn_cm) %>%
   layout(showlegend = FALSE) %>% 
@@ -233,7 +234,7 @@ ggplotly(knn_score.graph) %>%
   config(displayModeBar = F)
 ```
 
-### Results
+###
 ```{r}
 knn_result_dt
 ```
@@ -264,7 +265,7 @@ Decision Tree {data-navmenu="Methods"}
 
 
 
-### Confusion Matrix
+###
 ```{r}
 ggplotly(dt_cm) %>%
   layout(showlegend = FALSE) %>% 
@@ -280,7 +281,7 @@ ggplotly(dt_feature.graph) %>%
   config(displayModeBar = F)
 ```
 
-### Results
+###
 ```{r}
 dt_result_dt
 ```
@@ -306,7 +307,7 @@ SVM {data-navmenu="Methods"}
   <li>`r best_params(svm)`</li>
 </ul>
 
-### Confusion Matrix
+###
 ```{r}
 ggplotly(svm_cm) %>%
   layout(showlegend = FALSE) %>% 
@@ -321,7 +322,7 @@ ggplotly(svm_result.graph) %>%
   config(displayModeBar = F)
 ```
 
-### Results
+###
 ```{r}
 svm_result_dt
 ```
@@ -347,7 +348,7 @@ Log Reg {data-navmenu="Methods"}
   <li>`r best_params(lr)`</li>
 </ul>
 
-### Confusion Matrix
+###
 ```{r}
 ggplotly(lr_cm) %>%
   layout(showlegend = FALSE) %>% 
@@ -363,7 +364,7 @@ ggplotly(lr_result.graph) %>%
   config(displayModeBar = F)
 ```
 
-### Results
+###
 ```{r}
 lr_result_dt
 ```
@@ -390,7 +391,7 @@ Random Forest {data-navmenu="Methods"}
   <li>`r best_params(rf)`</li>
 </ul>
 
-### Confusion Matrix
+###
 ```{r}
 ggplotly(rf_cm) %>%
   layout(showlegend = FALSE) %>% 
@@ -399,12 +400,12 @@ ggplotly(rf_cm) %>%
 
 ## Column
 
-### Parameters
+###
 ```{r}
 
 ```
 
-### Results
+###
 ```{r}
 rf_result_dt
 ```
@@ -430,7 +431,7 @@ KNN (PCA) {data-navmenu="Methods"}
   <li>`r best_params(knn.pca)`</li>
 </ul>
 
-### Confusion Matrix
+###
 ```{r}
 ggplotly(knn.pca_cm) %>%
   layout(showlegend = FALSE) %>% 
@@ -445,7 +446,7 @@ ggplotly(knn.pca_score.graph) %>%
   config(displayModeBar = F)
 ```
 
-### Results
+###
 ```{r}
 knn.pca_result_dt
 ```
@@ -471,7 +472,7 @@ SVM (PCA) {data-navmenu="Methods"}
   <li>`r best_params(svm.pca)`</li>
 </ul>
 
-### Confusion Matrix
+###
 ```{r}
 ggplotly(svm.pca_cm) %>%
   layout(showlegend = FALSE) %>% 
@@ -486,7 +487,7 @@ ggplotly(svm.pca_result.graph) %>%
   config(displayModeBar = F)
 ```
 
-### Results
+###
 ```{r}
 svm.pca_result_dt
 ```
@@ -512,7 +513,7 @@ Log Reg (Normal) {data-navmenu="Methods"}
   <li>`r best_params(lr.norm)`</li>
 </ul>
 
-### Confusion Matrix
+###
 ```{r}
 ggplotly(lr.norm_cm) %>%
   layout(showlegend = FALSE) %>% 
@@ -528,7 +529,7 @@ ggplotly(lr.norm_result.graph) %>%
   config(displayModeBar = F)
 ```
 
-### Results
+###
 ```{r}
 lr.norm_result_dt
 ```

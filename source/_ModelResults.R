@@ -180,6 +180,32 @@ dt_feature.graph <-
 rf_cm <- cmGraph(rf$result)
 rf_result_dt <- resultsDT(df = resultsDF, model = 'Random Forest')
 
+rf$CVresult %>%
+  select(param_criterion, 
+         param_max_depth, 
+         param_n_estimators, 
+         Mean = mean_test_score, 
+         Split_0 = split0_test_score, 
+         Split_1 = split1_test_score, 
+         Split_2 = split2_test_score, 
+         Split_3 = split3_test_score, 
+         Split_4 = split4_test_score) %>%
+  mutate(extra_param = paste(param_criterion, 
+                             param_max_depth, 
+                             sep=', ')) %>%
+  select(-param_criterion, 
+         -param_max_depth) %>%
+  gather(Split, Score, -param_n_estimators, -extra_param) %>%
+  mutate(Split = paste(Split, extra_param, sep=' - ')) %>%
+  select(-extra_param) %>%
+  ggplot(aes(x=param_n_estimators, y=Score, color=Split)) +
+  geom_line(show.legend = F) +
+  theme_classic() +
+  scale_y_continuous(labels = scales::percent) +
+  labs(title='Cross Validation Test Scores', 
+       x='Number of Estimators', 
+       y='Test Score')
+
 #SVM====
 svm_cm <- cmGraph(svm$result)
 svm_result_dt <- resultsDT(df = resultsDF, model = 'Support Vector Machine')
@@ -312,6 +338,9 @@ model_roc <-
                    xend=1, yend=1), 
                color='black', 
                show.legend = F) +
+  geom_point(aes(x=0, y=1), 
+             color='black', 
+             show.legend = F) +
   theme_classic() +
   labs(title='ROC', 
        x='False Positive Rate', 
@@ -368,8 +397,6 @@ model_criteria <-
        x=NULL, 
        y=NULL)
   
-
-
 
 
 
