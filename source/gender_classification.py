@@ -158,6 +158,8 @@ dt_roc = pd.DataFrame({'fpr': fpr,
 
 dt_auc = pd.DataFrame({'auc':[auc(fpr, tpr)]})
 
+dtCVresult = pd.DataFrame(dtsearch.cv_results_)
+
 #Save Results
 print('    Save Results')
 dtparams = hp.bestParamDF(dtsearch)
@@ -186,6 +188,10 @@ dt_roc.to_excel(writer,
 
 dt_auc.to_excel(writer, 
                 sheet_name='auc', 
+                index=False)
+
+dtCVresult.to_excel(writer, 
+                sheet_name='CVresult', 
                 index=False)
 
 writer.save()
@@ -326,17 +332,6 @@ writer.save()
 colNames = df.columns
 colNames = colNames.drop('label')
 
-x = df.drop('label', axis=1) #returns a numpy array
-min_max_scaler = preprocessing.MinMaxScaler()
-Xnorm_scaled = min_max_scaler.fit_transform(x)
-Xnorm = pd.DataFrame(Xnorm_scaled, 
-                     columns=colNames)
-
-X_train_norm, X_test_norm, y_train_norm, y_test_norm = train_test_split(Xnorm, 
-                                                    df.label, 
-                                                    test_size=0.33,
-                                                    random_state=0)
-
 
 print('Log Reg')
 lrparams = {'penalty' : ['l1', 'l2'], 
@@ -347,9 +342,9 @@ lrsearch = GridSearchCV(estimator=LogisticRegression(),
                          param_grid=lrparams, 
                          cv=5)
 print('    Fit')
-lrsearch.fit(X_train_norm, y_train_norm)
-lr_pred = lrsearch.predict(X_test_norm)
-lrAcc = accuracy_score(y_test_norm, lr_pred)
+lrsearch.fit(X_train, y_train)
+lr_pred = lrsearch.predict(X_test)
+lrAcc = accuracy_score(y_test, lr_pred)
 
 score = lrsearch.decision_function(X_test)
 score_roc = roc_curve(y_test, score, 'male')

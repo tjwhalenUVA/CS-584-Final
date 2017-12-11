@@ -180,16 +180,12 @@ dt_feature.graph <-
 rf_cm <- cmGraph(rf$result)
 rf_result_dt <- resultsDT(df = resultsDF, model = 'Random Forest')
 
-rf$CVresult %>%
+rf_result.graph <-
+  rf$CVresult %>%
   select(param_criterion, 
          param_max_depth, 
          param_n_estimators, 
-         Mean = mean_test_score, 
-         Split_0 = split0_test_score, 
-         Split_1 = split1_test_score, 
-         Split_2 = split2_test_score, 
-         Split_3 = split3_test_score, 
-         Split_4 = split4_test_score) %>%
+         Mean = mean_test_score) %>%
   mutate(extra_param = paste(param_criterion, 
                              param_max_depth, 
                              sep=', ')) %>%
@@ -263,12 +259,7 @@ lr_result.graph <-
   select(param_C, 
          param_fit_intercept, 
          param_penalty, 
-         Mean = mean_test_score, 
-         Split_0 = split0_test_score, 
-         Split_1 = split1_test_score, 
-         Split_2 = split2_test_score, 
-         Split_3 = split3_test_score, 
-         Split_4 = split4_test_score) %>%
+         Mean = mean_test_score) %>%
   mutate(extra_param = paste(param_fit_intercept, 
                              param_penalty, 
                              sep=', ')) %>%
@@ -282,7 +273,7 @@ lr_result.graph <-
   theme_classic() +
   scale_y_continuous(labels = scales::percent) +
   labs(title='Cross Validation Test Scores', 
-       x='Penalty Parameter (C)', 
+       x='C', 
        y='Test Score')
 
 #LR (PCA)====
@@ -294,12 +285,7 @@ lr.norm_result.graph <-
   select(param_C, 
          param_fit_intercept, 
          param_penalty, 
-         Mean = mean_test_score, 
-         Split_0 = split0_test_score, 
-         Split_1 = split1_test_score, 
-         Split_2 = split2_test_score, 
-         Split_3 = split3_test_score, 
-         Split_4 = split4_test_score) %>%
+         Mean = mean_test_score) %>%
   mutate(extra_param = paste(param_fit_intercept, 
                              param_penalty, 
                              sep=', ')) %>%
@@ -313,7 +299,7 @@ lr.norm_result.graph <-
   theme_classic() +
   scale_y_continuous(labels = scales::percent) +
   labs(title='Cross Validation Test Scores', 
-       x='Penalty Parameter (C)', 
+       x='C', 
        y='Test Score')
 
 
@@ -398,7 +384,57 @@ model_criteria <-
        y=NULL)
   
 
+#TIME====
+mean_times <- function(model_result, model){
+  df <- 
+    model_result %>%
+    summarise(fit_time = mean(mean_fit_time, na.rm=T), 
+              score_time = mean(mean_score_time, na.rm=T))
+  df$Model <- model$Name
+  return(df)
+}
 
+timesDF <-
+  bind_rows(
+  mean_times(knn$GSresult, knn), 
+  mean_times(knn.pca$GSresult, knn.pca), 
+  mean_times(svm$CVresult, svm), 
+  mean_times(svm.pca$CVresult, svm.pca), 
+  mean_times(dt$CVresult, dt), 
+  mean_times(rf$CVresult, rf), 
+  mean_times(lr$CVresult, lr), 
+  mean_times(lr.norm$CVresult, lr.norm)
+) 
+
+fit_time.graph <-
+  timesDF %>%
+  ggplot(aes(x=reorder(Model, fit_time, desc), 
+             y=fit_time, 
+             fill=Model)) +
+  geom_bar(stat='identity') +
+  geom_text(aes(label=Model, 
+                y=fit_time/2), 
+            angle=90) +
+  theme_classic() +
+  theme(axis.text.x = element_blank()) +
+  labs(x='Fitting Time', 
+       y='Seconds', 
+       title='Time to Fit the Model')
+
+score_time.graph <-
+  timesDF %>%
+  ggplot(aes(x=reorder(Model, score_time, desc), 
+             y=score_time, 
+             fill=Model)) +
+  geom_bar(stat='identity') +
+  geom_text(aes(label=Model, 
+                y=score_time/2), 
+            angle=90) +
+  theme_classic() +
+  theme(axis.text.x = element_blank()) +
+  labs(x='score Time', 
+       y='Seconds', 
+       title='Time to Score the Test Data')
 
 #Ensemble ====
 ens <- NULL
@@ -406,14 +442,18 @@ ens$true <- rf$result$true
 ens$rf.pred <- rf$result$pred
 ens$knn.pca.pred <- knn.pca$result$pred
 ens$svm.pca.pred <- svm.pca$result$pred
+ens$lr.pred <- lr$result$pred
 ens <- data.frame(ens)
 
 ens.table <-
   ens %>%
   mutate(rf.pred = ifelse(rf.pred == 'male', 1, 0), 
          knn.pca.pred = ifelse(knn.pca.pred == 'male', 1, 0), 
-         svm.pca.pred = ifelse(svm.pca.pred == 'male', 1, 0), 
-         groupResult = rf.pred + knn.pca.pred + svm.pca.pred, 
-         pred = ifelse(groupResult %in% c(2, 3), 'male', 'female')) %>%
+         svm.pca.pred = ifelse(svm.pca.pred == 'male', 1, 0),
+         lr.pred = ifelse(lr.pred == 'male', 1, 0),
+         groupResult = rf.pred + knn.pca.pred + svm.pca.pred + lr.pred, 
+         pred = ifelse(groupResult %in% c(4), 'male', 'female')) %>%
   select(true, pred) %>%
   table(.)
+
+(ens.table[1] + ens.table[4]) / sum(ens.table)

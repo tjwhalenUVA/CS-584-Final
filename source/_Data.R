@@ -79,6 +79,12 @@ dt$auc <- read_excel(paste(mainFolder,
                      sheet = "auc"
 )
 
+dt$CVresult <- read_excel(paste(mainFolder, 
+                           "/results/dt_results.xlsx", 
+                           sep = ""), 
+                     sheet = "CVresult"
+)
+
 #RF====
 rf <- NULL
 

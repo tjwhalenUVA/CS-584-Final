@@ -119,7 +119,7 @@ oneVall <-
          "Value", 
          -label, -meanfun) %>%
   ggplot(aes(x=meanfun, y=Value)) +
-  geom_point(aes(color=label, fill='black'), alpha = 0.3) +
+  geom_point(aes(color=label), alpha = 0.3) +
   facet_wrap(~Measure, 
              scales = "free_y") +
   theme_classic() +
@@ -184,18 +184,17 @@ tTestDT <-
   finalDF %>%
   mutate(T.Value = round(T.Value, 3), 
          df = round(df, 1), 
-         P.Value = round(P.Value, 5), 
+         P.Value = round(P.Value, 7), 
          CI.Lower = round(CI.Lower, 3), 
          CI.Upper = round(CI.Upper, 3), 
          Female = round(Female, 3), 
          Male = round(Male, 3)) %>%
   datatable(., 
             rownames = F, 
-            caption='Two Sample T-test. 99% Confidence Level', 
-            options(paging=F, 
-                    dom='t', 
-                    order = list(list(3, 'asc'))
-                    )) %>% 
+            caption='Two Sample T-test. 99% Confidence Level',
+            options(dom='t', 
+                    paging=F, 
+                    order = list(list(3, 'dsc')))) %>% 
   formatStyle(
     'P.Value',
     target = 'row',

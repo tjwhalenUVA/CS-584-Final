@@ -29,15 +29,18 @@ Summary
 =====================================
 ## Column
 ### 
-<font size="6"><b>Choosing a Project</b></font>
+<font size="5"><b>Choosing a Project</b></font>
+<font size="3">
 <ul>
   <li>Topic? Sports, Beer, Other </li>
   <li>Supervised or unsupervised learning?</li>
   <li>Data Source: Download, Web Scrape, Social Media</li>
   <li>Tools: Python, R, Weka, Tableau, Excel</li>
 </ul>
+</font>
 <br>
-<font size="6"><b>Choice</b></font>
+<font size="5"><b>Choice</b></font>
+<font size="3">
 <ul>
   <li>Data from Kaggle</li>
   <li>Audio Analysis</li>
@@ -47,13 +50,16 @@ Summary
   <li>Presentation & Report in R Markdown</li>
   <li>Excel for results transfer</li>
 </ul>
+</font>
 <br>
-<font size="6"><b>Goals</b></font>
+<font size="5"><b>Goals</b></font>
+<font size="3">
 <ul>
   <li>Classify audio clip subjects gender</li>
   <li>Learn what features best seperate gender in audio</li>
   <li>Look for other potential clusters within the data</li>
 </ul>
+</font>
 
 Method
 =====================================
@@ -92,6 +98,9 @@ ggplotly(scatterSample) %>%
   <li>Decision Tree: Use multiple trees with Random Forest</li>
   <li>SVM: Transform data with PCA</li>
 </ol>
+
+###
+<img src="C:/Users/e481340/Documents/GMU MASTERS/CS 584/CS584_Final/data/machine-learning.jpg" alt="Machine Learning">
 
 ## Column
 
@@ -209,9 +218,10 @@ KNN {data-navmenu="Methods"}
 <ul>
   <li>Used untransformed data</li>
   <li>Better then a dumb classifier</li>
-  <li>Manhattan Distance produced better CV results (p=1)</li>
   <li>Distance weights outperformed uniform weights</li>
-  <li>Better at identifying males</li>
+  <li>Manhattan Distance produced better CV results (p=1)</li>
+  <li>auto: attempts to decide the most appropriate algorithm based on values </li>
+  <li>distance: weight points by the inverse of their distance. in this case, closer neighbors of a query point will have a greater influence than neighbors which are further away</li>
 </ul>
 
 <b>Best Parameters</b>
@@ -252,7 +262,9 @@ Decision Tree {data-navmenu="Methods"}
 <b>Summary</b>
 <ul>
   <li>Used untransformed data</li>
-  <li>MeanFun & Q25 account for +75% of feature importance</li>
+  <li>MeanFun, sp.ent & IQR account for +90% of feature importance</li>
+  <li>presort: presort the data to speed up the finding of best splits in fitting</li>
+  <li>splitter: The strategy used to choose the split at each node</li>
   <li>Better at identifying males</li>
   <li>Easiest to interpret</li>
   <li>[Tree](https://github.com/tjwhalenUVA/CS-584-Final/blob/master/Trees/dt.pdf)</li>
@@ -296,10 +308,8 @@ SVM {data-navmenu="Methods"}
 <b>Summary</b>
 <ul>
   <li>Modified penalty parameter to acheive better results</li>
-  <li></li>
-  <li></li>
-  <li></li>
-  <li></li>
+  <li>Higher penalties acheived better scores</li>
+  <li>Better at classifying males</li>
 </ul>
 
 <b>Best Parameters</b>
@@ -336,11 +346,12 @@ Log Reg {data-navmenu="Methods"}
 ###
 <b>Summary</b>
 <ul>
+  <li>Untransformed data</li>
   <li>Best Male accuracy</li>
-  <li></li>
-  <li></li>
-  <li></li>
-  <li></li>
+  <li>Outperformed Log Reg (Normal)</li>
+  <li>C: Inverse of regularization strength</li>
+  <li>fit_intercept: Specifies if a constant (a.k.a. bias or intercept) should be added to the decision function</li>
+  <li>penalty: Used to specify the norm used in the penalization</li>
 </ul>
 
 <b>Best Parameters</b>
@@ -379,11 +390,8 @@ Random Forest {data-navmenu="Methods"}
 ###
 <b>Summary</b>
 <ul>
-  <li>Best overall accuracy</li>
   <li>Best Female accuracy</li>
-  <li></li>
-  <li></li>
-  <li></li>
+  <li>Took longer to fit then Decision Tree</li>
 </ul>
 
 <b>Best Parameters</b>
@@ -402,7 +410,9 @@ ggplotly(rf_cm) %>%
 
 ###
 ```{r}
-
+ggplotly(rf_result.graph) %>%
+  layout(showlegend = FALSE) %>% 
+  config(displayModeBar = F)
 ```
 
 ###
@@ -419,11 +429,9 @@ KNN (PCA) {data-navmenu="Methods"}
 ###
 <b>Summary</b>
 <ul>
-  <li></li>
-  <li></li>
-  <li></li>
-  <li></li>
-  <li></li>
+  <li>Best overall accuracy</li>
+  <li>9 PCA components used</li>
+  <li>The fewer the neighbors the better</li>
 </ul>
 
 <b>Best Parameters</b>
@@ -460,11 +468,9 @@ SVM (PCA) {data-navmenu="Methods"}
 ###
 <b>Summary</b>
 <ul>
-  <li></li>
-  <li></li>
-  <li></li>
-  <li></li>
-  <li></li>
+  <li>Improvement over SVM on untransformed data</li>
+  <li>Adjusted penalty parameter C of the error term</li>
+  <li>Acheived best performance at much lower penalty parameter levels</li>
 </ul>
 
 <b>Best Parameters</b>
@@ -501,11 +507,9 @@ Log Reg (Normal) {data-navmenu="Methods"}
 ###
 <b>Summary</b>
 <ul>
-  <li></li>
-  <li></li>
-  <li></li>
-  <li></li>
-  <li></li>
+  <li>Performed worse then Log Regression on untransformed data</li>
+  <li>Due to decrease in Male accuracy</li>
+  <li>Slight improvement in Female accuracy</li>
 </ul>
 
 <b>Best Parameters</b>
@@ -545,9 +549,33 @@ ggplotly(model_criteria) %>%
 ```
 
 ***
-Discuss criteria. 
-Females hard to get right. 
-Males easier.
+<b>Accuracy</b>
+<ol>
+  <li>KNN (PCA)</li>
+  <li>Random Forest</li>
+  <li>Log Regression</li>
+</ol>
+
+<b>Male Accuracy</b>
+<ol>
+  <li>Log Regression</li>
+  <li>Log Regression (Normal)</li>
+  <li>KNN (PCA)</li>
+</ol>
+
+<b>Female Accuracy</b>
+<ol>
+  <li>Random Forest</li>
+  <li>KNN (PCA)</li>
+  <li>Log Regression (Normal)</li>
+</ol>
+
+<b>AUC</b>
+<ol>
+  <li>Random Forest</li>
+  <li>Log Regression</li>
+  <li>Log Regression (Normal)</li>
+</ol>
 
 ### ROC
 ```{r}
@@ -556,18 +584,40 @@ ggplotly(model_roc) %>%
 ```
 
 ***
-Inital models were bad. 
-Transforming data and using alternate algorithms improved performance.
+<font size="3"><b>Area Under the Curve</b></font><br>
+KNN: `r knn$auc$auc`<br>
+Decision Tree: `r dt$auc$auc`<br>
+SVM: `r svm$auc$auc`<br>
+Log Reg: `r lr$auc$auc`<br>
+KNN (PCA): `r knn.pca$auc$auc`<br>
+<b>Random Forest</b>: `r rf$auc$auc`<br>
+SVM (PCA): `r svm.pca$auc$auc`<br>
+Log Reg (Normal): `r lr.norm$auc$auc`<br>
+
+### Fitting Times
+```{r}
+ggplotly(fit_time.graph) %>%
+  layout(showlegend = FALSE) %>% 
+  config(displayModeBar = F)
+```
+
+### Scoring Times
+```{r}
+ggplotly(score_time.graph) %>%
+  layout(showlegend = FALSE) %>% 
+  config(displayModeBar = F)
+```
+
 
 ### Findings
+<b>Best Model</b>
 <ul>
-  <li></li>
-  <li></li>
-  <li></li>
-  <li></li>
-  <li></li>
-  <li></li>
-  <li></li>
+  <li>Best Model: Random Forest</li>
+  <li>2nd highest overall accuracy</li>
+  <li>1st Female accuracy</li>
+  <li>Highest Area Under the Curve</li>
+  <li>Decent Fitting Time</li>
+  <li>Faster Scoring Time</li>
 </ul>
 
 
