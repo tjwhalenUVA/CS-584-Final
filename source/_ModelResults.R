@@ -417,9 +417,9 @@ fit_time.graph <-
             angle=90) +
   theme_classic() +
   theme(axis.text.x = element_blank()) +
-  labs(x='Fitting Time', 
+  labs(x='Mean Fitting Time', 
        y='Seconds', 
-       title='Time to Fit the Model')
+       title='Fitting the Model')
 
 score_time.graph <-
   timesDF %>%
@@ -432,9 +432,9 @@ score_time.graph <-
             angle=90) +
   theme_classic() +
   theme(axis.text.x = element_blank()) +
-  labs(x='score Time', 
+  labs(x='Mean Score Time', 
        y='Seconds', 
-       title='Time to Score the Test Data')
+       title='Scoring with the Model')
 
 #Ensemble ====
 ens <- NULL

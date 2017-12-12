@@ -72,7 +72,7 @@ Method
   <li>Ran summary functions on features</li>
   <li>Plotted the data</li>
   <li>Look for patterns and relationships between features</li>
-  <li>Determine what features seperate gender best</li>
+  <li>Determine what features seperate genders best</li>
 </ol>
 
 ###
@@ -87,16 +87,18 @@ ggplotly(scatterSample) %>%
 ### <b>Classification</b>
 <ol>
   <li>Used Scikit-learn in Python</li>
-  <li>Split the data for training/testing (1/3, 2/3)</li>
+  <li>Split the data for training/testing (2/3, 1/3)</li>
   <li>Used gridsearch to identify the best parameters</li>
   <li>KNN (K-Nearest Neighbors)</li>
   <li>Decision Tree (DT)</li>
   <li>Suport Vector Machine (SVM)</li>
+  <li>Logistic Regression (Log R)</li>
   <li>Observed prediction outcomes. Could do better.</li>
   <li>Attempt to Improve on initial results</li>
   <li>KNN: Transform data with PCA</li>
   <li>Decision Tree: Use multiple trees with Random Forest</li>
   <li>SVM: Transform data with PCA</li>
+  <li>Log R: Normalized data from 0 to 1 in each feature</li>
 </ol>
 
 ###
@@ -110,8 +112,9 @@ ggplotly(scatterSample) %>%
   <li>Overall Accuracy Scores</li>
   <li>Male Accuracy</li>
   <li>Female Accuracy</li>
+  <li>ROC & AUC</li>
   <li>Parameter Influence</li>
-  <li>Graph Results</li>
+  <li>Fit & Score Times</li>
 </ul>
 
 ###
@@ -127,7 +130,8 @@ Overview {data-navmenu="Data"}
 ## Column {.tabset}
 
 ### Description
-<b>Dataset Comments</b>
+<font size="5"><b>Dataset Comments</b></font>
+<font size="3">
 <ul>
   <li>Database created to identify a voice as male or female, based upon acoustic properties of the voice and speech.</li>
   <li>The dataset consists of 3,168 recorded voice samples, collected from male and female speakers.</li>
@@ -135,6 +139,7 @@ Overview {data-navmenu="Data"}
   <li>The samples are represented by 21 different features</li>
   <li>Source: <a href="https://www.kaggle.com/primaryobjects/voicegender" target="_blank">Voice Gender Data</a></li>
 </ul>
+</font>
 
 ### Definitions
 ```{r definitionsTable}
@@ -217,11 +222,11 @@ KNN {data-navmenu="Methods"}
 <b>Summary</b>
 <ul>
   <li>Used untransformed data</li>
-  <li>Better then a dumb classifier</li>
-  <li>Distance weights outperformed uniform weights</li>
-  <li>Manhattan Distance produced better CV results (p=1)</li>
-  <li>auto: attempts to decide the most appropriate algorithm based on values </li>
-  <li>distance: weight points by the inverse of their distance. in this case, closer neighbors of a query point will have a greater influence than neighbors which are further away</li>
+  <li>Better then a dumb classifier (50/50)</li>
+  <li>Distance weights outperformed Uniform weights</li>
+  <li><b>P:</b> Manhattan Distance produced better CV results (p=1)</li>
+  <li><b>Algorithm:</b> auto attempts to decide the most appropriate algorithm based on values </li>
+  <li><b>Weights:</b> distance weights points by the inverse of their distance. in this case, closer neighbors of a query point will have a greater influence than neighbors which are further away</li>
 </ul>
 
 <b>Best Parameters</b>
@@ -263,10 +268,10 @@ Decision Tree {data-navmenu="Methods"}
 <ul>
   <li>Used untransformed data</li>
   <li>MeanFun, sp.ent & IQR account for +90% of feature importance</li>
-  <li>presort: presort the data to speed up the finding of best splits in fitting</li>
-  <li>splitter: The strategy used to choose the split at each node</li>
+  <li><b>Presort:</b> presort the data to speed up the finding of best splits in fitting</li>
+  <li><b>Splitter:</b> The strategy used to choose the split at each node</li>
   <li>Better at identifying males</li>
-  <li>Easiest to interpret</li>
+  <li>Easiest model to interpret (follow the branches)</li>
   <li>[Tree](https://github.com/tjwhalenUVA/CS-584-Final/blob/master/Trees/dt.pdf)</li>
 </ul>
 
@@ -349,9 +354,9 @@ Log Reg {data-navmenu="Methods"}
   <li>Untransformed data</li>
   <li>Best Male accuracy</li>
   <li>Outperformed Log Reg (Normal)</li>
-  <li>C: Inverse of regularization strength</li>
-  <li>fit_intercept: Specifies if a constant (a.k.a. bias or intercept) should be added to the decision function</li>
-  <li>penalty: Used to specify the norm used in the penalization</li>
+  <li><b>C:</b> Inverse of regularization strength</li>
+  <li><b>fit_intercept:</b> Specifies if a constant (a.k.a. bias or intercept) should be added to the decision function</li>
+  <li><b>penalty:</b> Used to specify the norm used in the penalization</li>
 </ul>
 
 <b>Best Parameters</b>
@@ -508,8 +513,8 @@ Log Reg (Normal) {data-navmenu="Methods"}
 <b>Summary</b>
 <ul>
   <li>Performed worse then Log Regression on untransformed data</li>
-  <li>Due to decrease in Male accuracy</li>
-  <li>Slight improvement in Female accuracy</li>
+  <li>Decrease in performance due to decrease in Male accuracy</li>
+  <li>Slight improvement in Female accuracy compared to first Log R</li>
 </ul>
 
 <b>Best Parameters</b>
@@ -542,7 +547,7 @@ lr.norm_result_dt
 Conclusions {.storyboard}
 =====================================
 
-### Criteria
+### <font size="5"><b>Criteria</b></font>
 ```{r}
 ggplotly(model_criteria) %>%
   config(displayModeBar = F)
@@ -577,7 +582,7 @@ ggplotly(model_criteria) %>%
   <li>Log Regression (Normal)</li>
 </ol>
 
-### ROC
+### <font size="5"><b>ROC</b></font>
 ```{r}
 ggplotly(model_roc) %>%
   config(displayModeBar = F)
@@ -585,23 +590,25 @@ ggplotly(model_roc) %>%
 
 ***
 <font size="3"><b>Area Under the Curve</b></font><br>
-KNN: `r knn$auc$auc`<br>
-Decision Tree: `r dt$auc$auc`<br>
-SVM: `r svm$auc$auc`<br>
-Log Reg: `r lr$auc$auc`<br>
-KNN (PCA): `r knn.pca$auc$auc`<br>
-<b>Random Forest</b>: `r rf$auc$auc`<br>
-SVM (PCA): `r svm.pca$auc$auc`<br>
-Log Reg (Normal): `r lr.norm$auc$auc`<br>
+<ul>
+  <li>KNN: `r knn$auc$auc`</li>
+  <li>Decision Tree: `r dt$auc$auc`</li>
+  <li>SVM: `r svm$auc$auc`</li>
+  <li>Log Reg: `r lr$auc$auc`</li>
+  <li>KNN (PCA): `r knn.pca$auc$auc`</li>
+  <li><b>Random Forest</b>: `r rf$auc$auc`</li>
+  <li>SVM (PCA): `r svm.pca$auc$auc`</li>
+  <li>Log Reg (Normal): `r lr.norm$auc$auc`</li>
+</ul>
 
-### Fitting Times
+### <font size="5"><b>Fitting Times</b></font>
 ```{r}
 ggplotly(fit_time.graph) %>%
   layout(showlegend = FALSE) %>% 
   config(displayModeBar = F)
 ```
 
-### Scoring Times
+### <font size="5"><b>Scoring Times</b></font>
 ```{r}
 ggplotly(score_time.graph) %>%
   layout(showlegend = FALSE) %>% 
@@ -609,8 +616,9 @@ ggplotly(score_time.graph) %>%
 ```
 
 
-### Findings
-<b>Best Model</b>
+### <font size="5"><b>Conclusion</b></font>
+<font size="5"><b>Best Model</b></font>
+<font size="3">
 <ul>
   <li>Best Model: Random Forest</li>
   <li>2nd highest overall accuracy</li>
@@ -619,8 +627,13 @@ ggplotly(score_time.graph) %>%
   <li>Decent Fitting Time</li>
   <li>Faster Scoring Time</li>
 </ul>
-
-
-
-
-
+</font>
+<font size="5"><b>Improvements</b></font>
+<font size="3">
+<ul>
+  <li>Focus on a single method</li>
+  <li>Combine features to create new ones</li>
+  <li>Implement more advanced methods (Bagging/Boosting)</li>
+  <li>Extract features from raw aaudio files</li>
+</ul>
+</font>
