@@ -34,27 +34,35 @@ The data values all consisted of floating point values.
 The features had ranges from 0 up to 1,300 and thus might require som transformations when passed into a model.
 There were no missing values which allowed th analyst to concentrate on the models and there results rather then preparing the data. 
 
-# Project Approach
+# Approach
 
 Three main steps were used to take the raw data and produce models that would accuractely classify a voice by the gender. 
 First the method known as exploratory data analysis (EDA) was used to investigate the underlying data distributions. 
 Second the data was passed to various algorithms and trained models to then make predictions on a test set of data. 
 Third, and finally, the model results were compared using a variety of metrics and a best overall model was chosen.
 
-#### EDA
+# EDA
 
-#### Machine Learning
-
-#### Evaluation
-
-# Exploratory Data Analysis
+The first step in building a gender classifier was to inspect the data. 
+This was acheived mostly through data visualization with a few statistical tests.
+The main idea of a visualization is to gain insight into the data. 
+Rather then view the raw numbers in a table, a visualization can quickly tell a story.
 
 #### Classes
+The first attribute in the data that was inspected was the label. 
+This feature is what every model built in step 2 will try to determine and thus may well be the most important feature in the data.
+In this project the label consists of two values, male and female.
+The graph below shows the count of each label.
 
 ```{r, fig.height=3, fig.width=3}
 genderCount
 ```
 
+What is important to note is that the classes are evenly distributed. 
+There are an equal number of male anf female voice recordings in the dataset.
+Thus a 'dumb classifier' that predicts male every time would be correct 50% of the time.
+In step 2 this will be used as the threshold to measure wether a model is of any use or not.
+A model that acheives less then 50% gender classification accuracy should be discarded. 
 
 #### Visualize
 
