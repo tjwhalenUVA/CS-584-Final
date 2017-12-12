@@ -1,7 +1,7 @@
 ---
 title: "CS 584 Final - Fall 2017"
 author: "Jake Whalen"
-date: "November 21, 2017"
+date: "December 11, 2017"
 output: word_document
 ---
 
@@ -14,27 +14,38 @@ source('_ModelResults.R')
 ```
 
 # Executive Summary
+This final project was developed for the GMU CS 584 Spring lecture course at Engility. The goal was to choose an interesting data set and apply the data mining techniques learned in class to the data. There was an additional goal to go above an beyond what was done in class. This was accomplished in several ways during the completion of this project. 
 
-Summary of purpose/results
+The data selected was from [Kaggle](https://www.kaggle.com/primaryobjects/voicegender) and contains over 3,000 pre-processed audio samples. Each sample contains a label for the gender of the voice in the clip. The data was stored in a CSV file and then loaded into both R and Python. R was used for early exploratory data analysis. The data was plotted and run through statistical tests to better understand the underlying distributions. Python was used for applying the data mining techniques learnined in class. The [scikit-learn](http://scikit-learn.org/stable/) package was used for al of this work. It was used previously for all three homeworks so the application of the package was fast and easy for the analyst. The results of the models in python were exported into Excel files and then imported into R for reporting. THe final presentation and report were written in R Markdown for instant reproducibility. Making a slight change to the model parameters would automatically update the results displayed in the presentation and report. 
+
+The final results were encouraging. The worst model acheived over 80% classification accuracy while the best reached 98%. All models did better classifying Male voices. The better models acheived higher female classification accuracy. In the end it was a difficult choice between 3 different models. The best model did not acheive the highest rank in all metrics used for evaluation but it was conistently in the top 3 models for every metric.  
 
 # Motivation
+Using machine learning techniques to understand human audio is a trending topic. Look no further then the in home personal assistants being sold by companies like Apple (Siri), Google (Google Home), and Amazon (Alexa). Answering a question posed by a human however can be quite difficult and would require massive amounts of data and a powerful computer to process and train models. This project reduces the scope to a more managelable level. 
+
+This project attempts to develop methods that can classify the gender of a speaker. While not as impressive as responding to a question with an answer this project will introduce how different features of a voice can help group the voice into one or more classes. These features could be used for more then gender classification. This project could potentially be extended to classify the speakers mood or age group. Overall this project was motivated by a curiosity to see how well a model could interpret a speakers voice. 
 
 # Data
+The data was downloaded from [Kaggle](https://www.kaggle.com/primaryobjects/voicegender) and stored in a CSV file. 
+The data consisted of more then 3,000 gender labelled records. 
+Each audio clip was pre-processed in R and the transformed into 20 features by the original poster. 
+The features included measures such as mean frequency, skewness, spectral entropy and the average of the fundamental frequency measured across the acoustic signal.
+The data values all consisted of floating point values.
+The features had ranges from 0 up to 1,300 and thus might require som transformations when passed into a model.
+There were no missing values which allowed th analyst to concentrate on the models and there results rather then preparing the data. 
 
-## Overview
-There are +3,000 labelled records. The data contains 20 Features such as mean frequency, skewness, spectral entropy and average of fundamental frequency measured across acoustic signal. The goal is to predict whether a voice is male or female. A follow up goal is to determine what characteristics help distinguish between genders in the dataset.
+# Project Approach
 
-The data was downloaded from <https://www.kaggle.com/primaryobjects/voicegender>. 
+Three main steps were used to take the raw data and produce models that would accuractely classify a voice by the gender. 
+First the method known as exploratory data analysis (EDA) was used to investigate the underlying data distributions. 
+Second the data was passed to various algorithms and trained models to then make predictions on a test set of data. 
+Third, and finally, the model results were compared using a variety of metrics and a best overall model was chosen.
 
+#### EDA
 
+#### Machine Learning
 
-# Approach
-
-EDA
-
-Machine Learning
-
-Evaluation
+#### Evaluation
 
 # Exploratory Data Analysis
 
