@@ -2,7 +2,15 @@
 title: "CS 584 Final - Fall 2017"
 author: "Jake Whalen"
 date: "December 11, 2017"
-output: word_document
+output: 
+  html_document: 
+    toc: yes
+    toc_float: yes
+    toc_depth: 6
+      # word_document: 
+      #   fig_caption: yes
+      #   toc: yes
+      #   toc_depth: 6
 ---
 
 ```{r setup, include=FALSE}
@@ -148,11 +156,16 @@ Reducing dimensionality may lead to better results when evaluating models.
 
 ###### Scatter Plot
 
+The scatter plot below is another example of how to inspect relationships between features.
+The plot shows every feature plotted on the y-axis against the meanfun on the x-axis of every plot.
+The meanfun was chosen because it was one of the features from the density plot that best seperated the data. 
+Plotting it against other features would hopefully show a combination that further separated the data.
+It did to some degree as evidenced by the fairly well separated blue and pink clusters in each graph.
+This chart was replicated using each of the strongly separated individual features on the x-axis. Each one resulted in a similar looking graph like the one below.
+
 ```{r, fig.height=7, fig.width=7}
 oneVall
 ```
-
-Also discuss 3D
 
 #### Statistical Testing
 
