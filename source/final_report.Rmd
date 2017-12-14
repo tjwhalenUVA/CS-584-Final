@@ -66,6 +66,9 @@ A model that acheives less then 50% gender classification accuracy should be dis
 
 #### Visualize
 
+The next step after inspecting the class counts was to visualize the data through graphs.
+
+
 ###### Distributions
 
 ```{r, fig.height=7, fig.width=7}
@@ -93,6 +96,11 @@ oneVall
 Also discuss 3D
 
 #### Statistical Testing
+
+```{r}
+tTestDF
+```
+
 
 
 # Classification
@@ -137,19 +145,19 @@ svm_cm + theme(legend.position = 'none')
 
 
 ```{r, fig.height=3, fig.width=4}
-
+svm_result.graph
 ```
 
 #### Logistic Regression
 
 Confusion Matrix
 ```{r, fig.height=3, fig.width=4}
-
+lr_cm + theme(legend.position = 'none')
 ```
 
 
 ```{r, fig.height=3, fig.width=4}
-
+lr_result.graph
 ```
 
 #### K-Nearest Neighbors (PCA)
@@ -173,7 +181,7 @@ rf_cm + theme(legend.position = 'none')
 
 
 ```{r, fig.height=3, fig.width=4}
-
+rf_result.graph
 ```
 
 #### Support Vector Machine (PCA)
@@ -185,11 +193,50 @@ svm.pca_cm + theme(legend.position = 'none')
 
 
 ```{r, fig.height=3, fig.width=4}
+svm.pca_result.graph
+```
 
+#### Logistic Regression (Normalized)
+
+Confusion Matrix
+```{r}
+lr.norm_cm + theme(legend.position = 'none')
+```
+
+```{r}
+lr.norm_result.graph
 ```
 
 
+
+
 # Conclusions
+
+#### Criteria
+
+```{r}
+model_criteria
+```
+
+#### ROC
+
+```{r}
+model_roc
+```
+
+#### Fitting Times
+
+```{r}
+fit_time.graph
+```
+
+#### Scoring Times
+
+```{r}
+score_time.graph
+```
+
+
 
 
 
