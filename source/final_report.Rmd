@@ -79,7 +79,7 @@ This feature is what every model built in step 2 will try to determine and thus 
 In this project the label consists of two values, male and female.
 The graph below shows the count of each label.
 
-```{r, fig.height=3, fig.width=3}
+```{r, fig.height=3, fig.width=3, fig.align='center'}
 genderCount
 ```
 
@@ -92,25 +92,59 @@ A model that acheives less then 50% gender classification accuracy should be dis
 #### Visualize
 
 The next step after inspecting the class counts was to visualize the data through graphs.
-
+Since every feature is numeric each one could be inspected individually and against one another.
+This step included a lot of trial and error as the analyst atempted to generate plots that would give insight into the data.
 
 ###### Distributions
 
-```{r, fig.height=7, fig.width=7}
+The distribution plots below show each feature broken out by the gender.
+The interesting features are the ones where there is very little overlap in the female and male population.
+These include the Inter-quartile range (IQR), Mean Fundamental Frequency (meanfun), Lower Quartile (Q25), and Spectral Entropy (sp.ent). 
+
+```{r, fig.height=6, fig.width=8, fig.align='center'}
 allDensity
 ```
 
+The features with non-overlapping distributions give insight into the differences between male and female voices. 
+Looking at the IQR densities it is obvious that the females have a lower range then males normally do.
+The opposite can be said about the meanfun where females are generally higher then males in this measure.
+Knowing this it would be expected for these variables to play an important role in classifying a voices gender.
+If the voice has a high IQR and low meanfun then it is most likely a males.
+
 ###### Boxplot
 
-```{r, fig.height=7, fig.width=7}
+The boxplot accomplishes the same task as the density plot for the most part. 
+The purpose of making one and including it in this report however was to show which features did not conform to a distribution of any kind very well. 
+These would be any feature with a lot of points in its chart. 
+The points in a boxplot represent outliers in the data. 
+Examples from the plot below include the Kurtosis (kurt), Max Fundamental Frequency (maxfun), and the Skew (skew) just to name a few.
+
+```{r, fig.height=7, fig.width=7, fig.align='center'}
 allBoxPlot
 ```
 
+Recognizing that these features contain outliers means they may need to be transformed in order to be useful.
+The outliers may be due to multimodal data or a wide range of values.
+Both of which can be fixed by applying a transformation on the data (i.e. log).
+Transforming the data will be done during the model building process to see how it may improve results.
+
 ###### Heatmap
+
+The heatmap with the overalid correlation values shows any strong positive or negative relationships amongst the features.
+There are a few interesting relationships that show very strong correlations between features. 
+The first is between the range of the dominant frequency (dfrange) and the max of the dominant frequency (maxdom).
+This relationship is understandable because the range would include the max in its calculation (max - min).
+The second relationship to inspect is between kurtosis and skew.
+Again, this may be expected due to the nature of the features. 
+SKew is the measure of the lack of symmetry and kurtosis measures wether the data is heavily tailed or not.
 
 ```{r, fig.height=7, fig.width=7}
 ggheatmap
 ```
+
+Within each of the two strongly correlated relationships mentioned a feature can be removed and very little if any information is lost from the datset. 
+The purpose of this excercise is to determine which features could be dropped to reduce dimensionality. 
+Reducing dimensionality may lead to better results when evaluating models.
 
 ###### Scatter Plot
 
@@ -139,12 +173,14 @@ tTestDF
 #### K-Nearest Neighbors
 
 Confusion Matrix
-```{r, fig.height=3, fig.width=4}
+
+```{r, fig.height=3, fig.width=4, fig.align='center'}
 knn_cm + theme(legend.position = 'none')
 ```
 
 Cross Validation Results
-```{r, fig.height=3, fig.width=5}
+
+```{r, fig.height=3, fig.width=5, fig.align='center'}
 knn_score.graph
 ```
 
@@ -152,11 +188,13 @@ knn_score.graph
 #### Decision Tree
 
 Confusion Matrix
+
 ```{r, fig.height=3, fig.width=4}
 dt_cm + theme(legend.position = 'none')
 ```
 
 Feature Importance
+
 ```{r, fig.height=3, fig.width=4}
 dt_feature.graph
 ```
@@ -164,6 +202,7 @@ dt_feature.graph
 #### Support Vector Machine
 
 Confusion Matrix
+
 ```{r, fig.height=3, fig.width=4}
 svm_cm + theme(legend.position = 'none')
 ```
@@ -176,6 +215,7 @@ svm_result.graph
 #### Logistic Regression
 
 Confusion Matrix
+
 ```{r, fig.height=3, fig.width=4}
 lr_cm + theme(legend.position = 'none')
 ```
@@ -188,11 +228,13 @@ lr_result.graph
 #### K-Nearest Neighbors (PCA)
 
 Confusion Matrix
+
 ```{r, fig.height=3, fig.width=4}
 knn.pca_cm + theme(legend.position = 'none')
 ```
 
 Cross Validation Results
+
 ```{r, fig.height=3, fig.width=5}
 knn.pca_score.graph
 ```
@@ -200,6 +242,7 @@ knn.pca_score.graph
 #### Random Forest
 
 Confusion Matrix
+
 ```{r, fig.height=3, fig.width=4}
 rf_cm + theme(legend.position = 'none')
 ```
@@ -212,6 +255,7 @@ rf_result.graph
 #### Support Vector Machine (PCA)
 
 Confusion Matrix
+
 ```{r, fig.height=3, fig.width=4}
 svm.pca_cm + theme(legend.position = 'none')
 ```
@@ -224,6 +268,7 @@ svm.pca_result.graph
 #### Logistic Regression (Normalized)
 
 Confusion Matrix
+
 ```{r}
 lr.norm_cm + theme(legend.position = 'none')
 ```
@@ -239,26 +284,26 @@ lr.norm_result.graph
 
 #### Criteria
 
-```{r}
+```{r fig.height=4, fig.width=8}
 model_criteria
 ```
 
 #### ROC
 
-```{r}
+```{r fig.height=6, fig.width=6}
 model_roc
 ```
 
 #### Fitting Times
 
-```{r}
-fit_time.graph
+```{r fig.height=5, fig.width=5}
+fit_time.graph + theme(legend.position='none')
 ```
 
 #### Scoring Times
 
-```{r}
-score_time.graph
+```{r fig.height=5, fig.width=5}
+score_time.graph + theme(legend.position='none')
 ```
 
 
