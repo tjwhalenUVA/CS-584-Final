@@ -4,17 +4,15 @@ author: "Jake Whalen"
 date: "December 11, 2017"
 output: 
   html_document: 
+    theme: journal
     toc: yes
-    toc_float: yes
     toc_depth: 6
-      # word_document: 
-      #   fig_caption: yes
-      #   toc: yes
-      #   toc_depth: 6
+    toc_float: yes
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(fig.align = 'center')
 source('_Packages.R')
 source('_Data.R')
 source('_EDA.R')
@@ -32,25 +30,25 @@ Each sample contains a label for the gender of the voice in the clip.
 The data was stored in a CSV file and then loaded into both R and Python. 
 R was used for early exploratory data analysis. 
 The data was plotted and run through statistical tests to better understand the underlying distributions. 
-Python was used for applying the data mining techniques learnined in class. 
+Python was used for applying the data mining techniques learned in class. 
 The [scikit-learn](http://scikit-learn.org/stable/) package was used for all of this work. 
-It was used previously for all three homeworks so the application of the package was fast and easy for the analyst. 
+It was used previously for all three homework assignments so the application of the package was fast and easy for the analyst. 
 The results of the models in python were exported into Excel files and then imported into R for reporting. 
-The final presentation and report were written in R Markdown for instant reproducibility. 
-Making a slight change to the model parameters would automatically update the results displayed in the presentation and report. 
+The final presentation and report were written in R Markdown. 
+This meant that making a slight change to the model parameters would automatically update the results displayed in the presentation and report. 
 
 The final results were encouraging. 
-The worst model acheived over 80% classification accuracy while the best reached 98%. 
+The worst model achieved over 80% classification accuracy while the best reached 98%. 
 All models did better classifying Male voices. 
-The better models acheived higher female classification accuracy. 
+The better models achieved higher female classification accuracy. 
 In the end it was a difficult choice between 3 different models. 
-The best model did not acheive the highest rank in all metrics used for evaluation but it was conistently in the top 3 models for every metric.  
+The best model did not achieve the highest rank in all metrics used for evaluation but it was consistently in the top 3 models for every metric.  
 
 # Motivation
 Using machine learning techniques to understand human audio is a trending topic. 
 Look no further then the in home personal assistants being sold by companies like Apple (Siri), Google (Google Home), and Amazon (Alexa). 
 Answering a question posed by a human however can be quite difficult and would require massive amounts of data and a powerful computer to process and train models. 
-This project reduces the scope to a more managelable level. 
+This project reduces the scope to a more manageable level. 
 
 This project attempts to develop methods that can classify the gender of a speaker. 
 While not as impressive as responding to a question with an answer this project will introduce how different features of a voice can help group the voice into one or more classes. 
@@ -64,12 +62,12 @@ The data consisted of more then 3,000 gender labelled records.
 Each audio clip was pre-processed in R and the transformed into 20 features by the original poster. 
 The features included measures such as mean frequency, skewness, spectral entropy and the average of the fundamental frequency measured across the acoustic signal.
 The data values all consisted of floating point values.
-The features had ranges from 0 up to 1,300 and thus might require som transformations when passed into a model.
-There were no missing values which allowed th analyst to concentrate on the models and there results rather then preparing the data. 
+The features had ranges from 0 up to 1,300 and thus might require some transformations when passed into a model.
+There were no missing values which allowed the analyst to concentrate on the models and there results rather then preparing the data. 
 
 # Approach
 
-Three main steps were used to take the raw data and produce models that would accuractely classify a voice by the gender. 
+Three main steps were used to take the raw data and produce models that would accurately classify a voice by the gender. 
 First the method known as exploratory data analysis (EDA) was used to investigate the underlying data distributions. 
 Second the data was passed to various algorithms and trained models to then make predictions on a test set of data. 
 Third, and finally, the model results were compared using a variety of metrics and a best overall model was chosen.
@@ -77,39 +75,37 @@ Third, and finally, the model results were compared using a variety of metrics a
 # EDA
 
 The first step in building a gender classifier was to inspect the data. 
-This was acheived mostly through data visualization with a few statistical tests.
+This was achieved mostly through data visualization with a few statistical tests.
 The main idea of a visualization is to gain insight into the data. 
 Rather then view the raw numbers in a table, a visualization can quickly tell a story.
 
-#### Classes
+## Classes
 The first attribute in the data that was inspected was the label. 
 This feature is what every model built in step 2 will try to determine and thus may well be the most important feature in the data.
 In this project the label consists of two values, male and female.
 The graph below shows the count of each label.
 
-```{r, fig.height=3, fig.width=3, fig.align='center'}
+```{r, fig.height=3, fig.width=3}
 genderCount
 ```
 
 What is important to note is that the classes are evenly distributed. 
-There are an equal number of male anf female voice recordings in the dataset.
+There are an equal number of male and female voice recordings in the data set.
 Thus a 'dumb classifier' that predicts male every time would be correct 50% of the time.
-In step 2 this will be used as the threshold to measure wether a model is of any use or not.
-A model that acheives less then 50% gender classification accuracy should be discarded. 
-
-#### Visualize
+In step 2 this will be used as the threshold to measure whether a model is of any use or not.
+A model that achieves less then 50% gender classification accuracy should be discarded. 
 
 The next step after inspecting the class counts was to visualize the data through graphs.
 Since every feature is numeric each one could be inspected individually and against one another.
-This step included a lot of trial and error as the analyst atempted to generate plots that would give insight into the data.
+This step included a lot of trial and error as the analyst attempted to generate plots that would give insight into the data.
 
-###### Distributions
+## Distributions
 
 The distribution plots below show each feature broken out by the gender.
 The interesting features are the ones where there is very little overlap in the female and male population.
 These include the Inter-quartile range (IQR), Mean Fundamental Frequency (meanfun), Lower Quartile (Q25), and Spectral Entropy (sp.ent). 
 
-```{r, fig.height=6, fig.width=8, fig.align='center'}
+```{r, fig.height=6, fig.width=8}
 allDensity
 ```
 
@@ -119,15 +115,15 @@ The opposite can be said about the meanfun where females are generally higher th
 Knowing this it would be expected for these variables to play an important role in classifying a voices gender.
 If the voice has a high IQR and low meanfun then it is most likely a males.
 
-###### Boxplot
+## Boxplot
 
-The boxplot accomplishes the same task as the density plot for the most part. 
+The box plot accomplishes the same task as the density plot for the most part. 
 The purpose of making one and including it in this report however was to show which features did not conform to a distribution of any kind very well. 
 These would be any feature with a lot of points in its chart. 
-The points in a boxplot represent outliers in the data. 
+The points in a box plot represent outliers in the data. 
 Examples from the plot below include the Kurtosis (kurt), Max Fundamental Frequency (maxfun), and the Skew (skew) just to name a few.
 
-```{r, fig.height=7, fig.width=7, fig.align='center'}
+```{r, fig.height=7, fig.width=7}
 allBoxPlot
 ```
 
@@ -136,29 +132,29 @@ The outliers may be due to multimodal data or a wide range of values.
 Both of which can be fixed by applying a transformation on the data (i.e. log).
 Transforming the data will be done during the model building process to see how it may improve results.
 
-###### Heatmap
+## Heatmap
 
-The heatmap with the overalid correlation values shows any strong positive or negative relationships amongst the features.
+The heatmap with the overlaid correlation values shows any strong positive or negative relationships between the features.
 There are a few interesting relationships that show very strong correlations between features. 
 The first is between the range of the dominant frequency (dfrange) and the max of the dominant frequency (maxdom).
 This relationship is understandable because the range would include the max in its calculation (max - min).
 The second relationship to inspect is between kurtosis and skew.
 Again, this may be expected due to the nature of the features. 
-SKew is the measure of the lack of symmetry and kurtosis measures wether the data is heavily tailed or not.
+Skew is the measure of the lack of symmetry and kurtosis measures whether the data is heavily tailed or not.
 
 ```{r, fig.height=7, fig.width=7}
 ggheatmap
 ```
 
-Within each of the two strongly correlated relationships mentioned a feature can be removed and very little if any information is lost from the datset. 
-The purpose of this excercise is to determine which features could be dropped to reduce dimensionality. 
+Within each of the two strongly correlated relationships mentioned a feature can be removed and very little if any information is lost from the data set. 
+The purpose of this exercise is to determine which features could be dropped to reduce dimensionality. 
 Reducing dimensionality may lead to better results when evaluating models.
 
-###### Scatter Plot
+## Scatter Plot
 
 The scatter plot below is another example of how to inspect relationships between features.
 The plot shows every feature plotted on the y-axis against the meanfun on the x-axis of every plot.
-The meanfun was chosen because it was one of the features from the density plot that best seperated the data. 
+The meanfun was chosen because it was one of the features from the density plot that best separated the data. 
 Plotting it against other features would hopefully show a combination that further separated the data.
 It did to some degree as evidenced by the fairly well separated blue and pink clusters in each graph.
 This chart was replicated using each of the strongly separated individual features on the x-axis. Each one resulted in a similar looking graph like the one below.
@@ -167,7 +163,7 @@ This chart was replicated using each of the strongly separated individual featur
 oneVall
 ```
 
-#### Statistical Testing
+## Statistical Testing
 
 ```{r}
 tTestDF
@@ -177,13 +173,11 @@ tTestDF
 
 # Classification
 
-#### Machine Learning
+## Supervised Machine Learning
 
-###### Python
+## Models
 
-###### Scikit Learn
-
-#### K-Nearest Neighbors
+### K-Nearest Neighbors
 
 Confusion Matrix
 
@@ -198,7 +192,7 @@ knn_score.graph
 ```
 
 
-#### Decision Tree
+### Decision Tree
 
 Confusion Matrix
 
@@ -212,7 +206,7 @@ Feature Importance
 dt_feature.graph
 ```
 
-#### Support Vector Machine
+### Support Vector Machine
 
 Confusion Matrix
 
@@ -225,7 +219,7 @@ svm_cm + theme(legend.position = 'none')
 svm_result.graph
 ```
 
-#### Logistic Regression
+### Logistic Regression
 
 Confusion Matrix
 
@@ -238,7 +232,7 @@ lr_cm + theme(legend.position = 'none')
 lr_result.graph
 ```
 
-#### K-Nearest Neighbors (PCA)
+### K-Nearest Neighbors (PCA)
 
 Confusion Matrix
 
@@ -252,7 +246,7 @@ Cross Validation Results
 knn.pca_score.graph
 ```
 
-#### Random Forest
+### Random Forest
 
 Confusion Matrix
 
@@ -265,7 +259,7 @@ rf_cm + theme(legend.position = 'none')
 rf_result.graph
 ```
 
-#### Support Vector Machine (PCA)
+### Support Vector Machine (PCA)
 
 Confusion Matrix
 
@@ -278,7 +272,7 @@ svm.pca_cm + theme(legend.position = 'none')
 svm.pca_result.graph
 ```
 
-#### Logistic Regression (Normalized)
+### Logistic Regression (Normalized)
 
 Confusion Matrix
 
@@ -293,33 +287,33 @@ lr.norm_result.graph
 
 
 
-# Conclusions
+# Model Evaluation
 
-#### Criteria
+## Criteria
 
 ```{r fig.height=4, fig.width=8}
 model_criteria
 ```
 
-#### ROC
+## ROC
 
 ```{r fig.height=6, fig.width=6}
 model_roc
 ```
 
-#### Fitting Times
+## Fitting Times
 
 ```{r fig.height=5, fig.width=5}
 fit_time.graph + theme(legend.position='none')
 ```
 
-#### Scoring Times
+## Scoring Times
 
 ```{r fig.height=5, fig.width=5}
 score_time.graph + theme(legend.position='none')
 ```
 
 
-
+# Conclusion
 
 
