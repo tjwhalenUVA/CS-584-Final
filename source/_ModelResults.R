@@ -85,6 +85,10 @@ resultsDT <- function(df, model){
   return(dt)
 }
 
+model_accuracy <- function(model){
+  return(resultsDF[resultsDF$Model == model$Name,]$Accuracy)
+}
+
 
 best_params <- function(model){
   finalStr <- ''
@@ -98,7 +102,7 @@ best_params <- function(model){
     } else{
       finalStr <- paste(finalStr, 
                         paramStr, 
-                        sep = '; ') 
+                        sep = ', ') 
     }
   }
   return(finalStr)
