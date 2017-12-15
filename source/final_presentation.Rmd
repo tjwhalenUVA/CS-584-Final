@@ -211,7 +211,7 @@ p
 ```
 
 
-KNN {data-navmenu="Methods"}
+KNN {data-navmenu="Models"}
 =====================================
 
 ## Column
@@ -256,7 +256,7 @@ knn_result_dt
 
 
 
-Decision Tree {data-navmenu="Methods"}
+Decision Tree {data-navmenu="Models"}
 =====================================
 
 ## Column
@@ -303,7 +303,7 @@ ggplotly(dt_feature.graph) %>%
 dt_result_dt
 ```
 
-SVM {data-navmenu="Methods"}
+SVM {data-navmenu="Models"}
 =====================================
 ## Column
 
@@ -342,7 +342,7 @@ ggplotly(svm_result.graph) %>%
 svm_result_dt
 ```
 
-Log Reg {data-navmenu="Methods"}
+Log Reg {data-navmenu="Models"}
 =====================================
 ## Column
 
@@ -385,7 +385,7 @@ ggplotly(lr_result.graph) %>%
 lr_result_dt
 ```
 
-Random Forest {data-navmenu="Methods"}
+Random Forest {data-navmenu="Models"}
 =====================================
 
 ## Column
@@ -425,7 +425,7 @@ ggplotly(rf_result.graph) %>%
 rf_result_dt
 ```
 
-KNN (PCA) {data-navmenu="Methods"}
+KNN (PCA) {data-navmenu="Models"}
 =====================================
 ## Column
 
@@ -464,7 +464,7 @@ ggplotly(knn.pca_score.graph) %>%
 knn.pca_result_dt
 ```
 
-SVM (PCA) {data-navmenu="Methods"}
+SVM (PCA) {data-navmenu="Models"}
 =====================================
 ## Column
 
@@ -503,7 +503,7 @@ ggplotly(svm.pca_result.graph) %>%
 svm.pca_result_dt
 ```
 
-Log Reg (Normal) {data-navmenu="Methods"}
+Log Reg (Normal) {data-navmenu="Models"}
 =====================================
 ## Column
 
