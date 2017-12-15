@@ -165,19 +165,51 @@ It seemed that the Log Regression model performed best on the raw data.
 
 # Results
 
-Best model
+Evaluating the models required choosing the proper metrics to compare the model results.
+These metrics included overall accuracy, class specific accuracy, and the area under the ROC curve (AUC).
+The graph below shows the metrics for each of the models.
+No single model was ranked number one for every metric, thus there is no clear cut best model.
+No model ranked in the top three of every metric either.
+Instead the best model was chosen based on how it faired at each metric.
 
-```{r, fig.height=3, fig.width=8}
+```{r, fig.height=4, fig.width=8}
 model_criteria
 ```
 
-```{r, fig.height=3, fig.width=8}
+As evidenced by the graph above there were a handful of models that did well across all four metrics.
+The best model ended up being the Random Forest classifier. 
+This model was chosen as the best because of it's high marks for Overall Accuracy (2nd), Female Accuracy (1st), and AUC (1st).
+While other models such as KNN using PCA also acheived high scores it came down to the AUC of the Random Forest being so high (`r rf$auc$auc`) and it's high Female accuracy.
+Classifying females voices proved to be a challenge for many of the models as seen by the lower values in the chart above.
+
+The ROC chart below shows how close it was amongst the better models.
+While the first two models built (KNN & SVM) were okay, the rest of the models approached the black dot indicating a perfect classification.
+
+```{r, fig.height=4, fig.width=8}
 model_roc
 ```
 
 # Conclusions
 
-Lesons learned
-Positives
-Negatives
-Moving foward
+This project wound up being a success not only through the learning acheived but the results produced. 
+Multiple models were generated and even acheived good results based on the metrics used for evaluation.
+During the execution of this project however a few lessons were learned.
+
+The first was during the EDA phase.
+I wound up spending more time on this step then was necessary.
+This was partly due to finding a data set that was already clean and did not require much work.
+The second lesson was learned while writing the code for the models in python.
+Near the end of the project when time was becoming a factor I realised I might have spread myself thin with models to review.
+A better method could have been to run the base models and then move foward with the best two.
+Improving only these with the transformations. 
+Given this is a school project done outside of work hours I found myself having to rush through reviewing models just to get them all accounted for.
+
+Moving foward I would continue to refine the Random Forest and KNN (PCA) models.
+The challenge would be improving the female accuracy first since that is the area that most models struggled in.
+I would also like to gather the raw data and apply models to it as well as the features derived from the audio samples.
+This may prove to make better models if the raw data were used and transformed via PCA or a Fast Fourier transform.
+
+A spin off of this project would be to also identify voice types. 
+Clustering the data into groups and attempting to identify which clusters are tenor or baritone etc.
+I beleive this would result in good results due to the fact that those voice types are divided up based on specific voice features. 
+A machine learnign model would simply automate the process and potntially beat out the human ear for accuracy.
