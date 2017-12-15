@@ -134,15 +134,46 @@ It ended up that `r best_params(dt)` generated the best tree with an accuracy of
 Rather then transform the data since the original model did so well the choice was made to apply more trees and take a majority vote.
 This method is also known as a Random Forest classifier.
 The Random Forest classifier found that `r best_params(rf)` reslted in the best  scores.
-It's accuracy when classifying the test data was `r model_accuracy(knn.pca)`.
+It's accuracy when classifying the test data was `r model_accuracy(rf)`.
 
 ### Support Vector Machine
 
+Next a SVM was created to classify the data.
+This algorithm attempts to split the data multiple ways through equations and perfectly divide the genders into their on groups.
+It was found that by altering the penalty parameter C for SVM the model could acheive beter results.
+The SVM classifier found that `r best_params(svm)` reslted in the best  scores.
+It's accuracy when classifying the test data was `r model_accuracy(svm)`.
+
+Similar to KNN the SVM model then was used with PCA transformed data to attempt to improve the baseline results.
+The performance was best when 13 principal components were used to fit the model.
+The SVM classifier with PCA data found that `r best_params(svm.pca)` reslted in the best  scores.
+It's accuracy when classifying the test data was `r model_accuracy(svm.pca)`.
+
 ### Logistic Regression
+
+Lastly, a model was built using Logistic Regression.
+The model was fit first with only the raw data.
+The Log Regression model accepted numerous parameters in python.
+TO acheive beter results this model varied the inverse of regularization strength (C), intercept fit, and a penalty value.
+A grid search found that `r best_params(lr)` reslted in the best  scores.
+It's accuracy when classifying the test data was `r model_accuracy(lr)`.
+
+Rather then apply a PCA transform which resulted in no change in accuracy for the Log Regression model a normalization was applied to the data.
+Each columns values were transformed so that the max value was set to 1 and minimum value was 0.
+This resulted in the model accuracy decreasing to `r model_accuracy(lr.norm)`.
+It seemed that the Log Regression model performed best on the raw data.
 
 # Results
 
 Best model
+
+```{r, fig.height=3, fig.width=8}
+model_criteria
+```
+
+```{r, fig.height=3, fig.width=8}
+model_roc
+```
 
 # Conclusions
 
