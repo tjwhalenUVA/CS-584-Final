@@ -73,7 +73,7 @@ This was achieved through data visualization and statistical tests.
 The main idea of a visualization is to gain insight into the data. 
 Rather then view the raw numbers in a table, a visualization can quickly tell a story.
 
-The first feature in the to be inspected was the label. 
+The first feature in the data to be inspected was the label. 
 This feature is what every model built in the classification step will try to determine.
 Thus the label may well be the most important feature in the data.
 In this project the label consists of two values, male and female.
@@ -138,7 +138,7 @@ It's accuracy when classifying the test data was `r model_accuracy(rf)`.
 
 ### Support Vector Machine
 
-Next a SVM was created to classify the data.
+Next, an SVM was created to classify the data.
 This algorithm attempts to split the data multiple ways through equations and perfectly divide the genders into their on groups.
 It was found that by altering the penalty parameter C for SVM the model could achieve better results.
 The SVM classifier found that `r best_params(svm)` resulted in the best  scores.
@@ -154,7 +154,7 @@ It's accuracy when classifying the test data was `r model_accuracy(svm.pca)`.
 Lastly, a model was built using Logistic Regression.
 The model was fit first with only the raw data.
 The Log Regression model accepted numerous parameters in python.
-TO achieve better results this model varied the inverse of regularization strength (C), intercept fit, and a penalty value.
+To achieve better results this model varied the inverse of regularization strength (C), intercept fit, and a penalty value.
 A grid search found that `r best_params(lr)` resulted in the best  scores.
 It's accuracy when classifying the test data was `r model_accuracy(lr)`.
 
@@ -206,7 +206,7 @@ Given this is a school project done outside of work hours I found myself having 
 
 Moving forward I would continue to refine the Random Forest and KNN (PCA) models.
 The challenge would be improving the female accuracy first since that is the area that most models struggled in.
-I would also like to gather the raw data and apply models to it as well as the features derived from the audio samples.
+I would also like to gather the raw data and apply the models to it as well.
 This may prove to make better models if the raw data were used and transformed via PCA or a Fast Fourier transform.
 
 A spin off of this project would be to also identify voice types. 
