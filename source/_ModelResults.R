@@ -410,32 +410,66 @@ timesDF <-
   mean_times(lr.norm$CVresult, lr.norm)
 ) 
 
-fit_time.graph <-
+fit_time.graph.rep <-
   timesDF %>%
   ggplot(aes(x=reorder(Model, fit_time, desc), 
              y=fit_time, 
              fill=Model)) +
   geom_bar(stat='identity') +
   geom_text(aes(label=Model, 
-                y=fit_time/2), 
-            angle=90) +
+                y=0), 
+            angle=90, 
+            hjust=0) +
   theme_classic() +
-  theme(axis.text.x = element_blank()) +
+  theme(axis.text.x = element_blank(), 
+        axis.ticks.x = element_blank()) +
   labs(x='Mean Fitting Time', 
        y='Seconds', 
        title='Fitting the Model')
 
-score_time.graph <-
+fit_time.graph.pres <-
+  timesDF %>%
+  ggplot(aes(x=reorder(Model, fit_time, desc), 
+             y=fit_time, 
+             fill=Model)) +
+  geom_bar(stat='identity') +
+  geom_text(aes(label=Model, 
+                y=fit_time/2)) +
+  theme_classic() +
+  theme(axis.text.x = element_blank(), 
+        axis.ticks.x = element_blank()) +
+  labs(x='Mean Fitting Time', 
+       y='Seconds', 
+       title='Fitting the Model')
+
+score_time.graph.rep <-
   timesDF %>%
   ggplot(aes(x=reorder(Model, score_time, desc), 
              y=score_time, 
              fill=Model)) +
   geom_bar(stat='identity') +
   geom_text(aes(label=Model, 
-                y=score_time/2), 
-            angle=90) +
+                y=0), 
+            angle=90, 
+            hjust=0) +
   theme_classic() +
-  theme(axis.text.x = element_blank()) +
+  theme(axis.text.x = element_blank(), 
+        axis.ticks.x = element_blank()) +
+  labs(x='Mean Score Time', 
+       y='Seconds', 
+       title='Scoring with the Model')
+
+score_time.graph.pres <-
+  timesDF %>%
+  ggplot(aes(x=reorder(Model, score_time, desc), 
+             y=score_time, 
+             fill=Model)) +
+  geom_bar(stat='identity') +
+  geom_text(aes(label=Model, 
+                y=score_time/2)) +
+  theme_classic() +
+  theme(axis.text.x = element_blank(), 
+        axis.ticks.x = element_blank()) +
   labs(x='Mean Score Time', 
        y='Seconds', 
        title='Scoring with the Model')

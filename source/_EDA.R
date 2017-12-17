@@ -180,7 +180,7 @@ for(i in voiceCols){
   finalDF <- bind_rows(finalDF, loopDF)
 }
 
-tTestDT <-
+tTestDF <-
   finalDF %>%
   mutate(T.Value = round(T.Value, 3), 
          df = round(df, 1), 
@@ -188,7 +188,10 @@ tTestDT <-
          CI.Lower = round(CI.Lower, 3), 
          CI.Upper = round(CI.Upper, 3), 
          Female = round(Female, 3), 
-         Male = round(Male, 3)) %>%
+         Male = round(Male, 3))
+
+tTestDT <-
+  tTestDF %>%
   datatable(., 
             rownames = F, 
             caption='Two Sample T-test. 99% Confidence Level',
@@ -199,17 +202,12 @@ tTestDT <-
     'P.Value',
     target = 'row',
     backgroundColor = styleInterval(0.01, c('lightgreen', 'gray'))
-  )
+  ) %>%
+  formatStyle(.,
+              names(tTestDF), 
+              color='black')
 
-tTestDF <-
-  finalDF %>%
-  mutate(T.Value = round(T.Value, 3), 
-         df = round(df, 1), 
-         P.Value = round(P.Value, 7), 
-         CI.Lower = round(CI.Lower, 3), 
-         CI.Upper = round(CI.Upper, 3), 
-         Female = round(Female, 3), 
-         Male = round(Male, 3))
+
 
 #Summary====
 

@@ -93,14 +93,14 @@ The next step after inspecting the class counts was to visualize the data throug
 Since every feature is numeric each one could be inspected individually and against one another.
 This step included a lot of trial and error attempting to generate plots that would give insight into the data.
 
-Multiple plots were genereated such as density, box, heat map, and 2D/3D scatter plots.
-The density and boxplots helped show how each feature was distributed and potentially split the gender classes apart. 
+Multiple plots were generated such as density, box, heat map, and 2D/3D scatter plots.
+The density and box plots helped show how each feature was distributed and potentially split the gender classes apart. 
 The scatter plots helped to show the interaction between multiple features. 
 In some cases two features would help to split the genders apart to make classification easier.
 The heat map generated included correlations between features.
 The correlations were used to remove any features where there was a perfect positive or negative correlation. 
 Removing one of the features from this pair would not cause the data to lose any information while reducing the dimensionality.
-After inspecting the visualizations and removing some of the features that supplied dulicate information the modeling phase began.
+After inspecting the visualizations and removing some of the features that supplied duplicate information the modeling phase began.
 
 ## Models
 
@@ -114,39 +114,39 @@ In both steps the models were fit using a grid search mechanism which allowed pa
 
 The first algorithm used was KNN.
 The parameters used to attempt to find the best KNN model included algorithm type, number of neighbors, distance metric, and weights.
-The first model fitted using raw data found that `r best_params(knn)` reslted in the best cross-validation scores. 
+The first model fitted using raw data found that `r best_params(knn)` resulted in the best cross-validation scores. 
 After predicting genders on the test data the model resulted in an accuracy of `r model_accuracy(knn)`.
 
 Next a transformation was used on the data known as Principal Component Analysis (PCA).
 The idea behind PCA is to reduce the dimensionality data and find a set of vectors to capture a majority of the variance in fewer features.
 After applying PCA and fitting the KNN model it was determined that 9 components maximized the mean cross-validation test scores.
-As for the other parameters `r best_params(knn.pca)` reslted in the best  scores.
+As for the other parameters `r best_params(knn.pca)` resulted in the best  scores.
 Overall the KNN model with the PCA transform resulted in an accuracy score of `r model_accuracy(knn.pca)`.
 
 ### Decision Tree
 
 The next model used was a decision tree.
 The decision tree is simple to understand. 
-At every node the tree makes a decison to split the data based on one features value.
+At every node the tree makes a decision to split the data based on one features value.
 Again a grid search was used to find the parameters that build the best tree for the data.
 It ended up that `r best_params(dt)` generated the best tree with an accuracy of `r model_accuracy(dt)`.
 
 Rather then transform the data since the original model did so well the choice was made to apply more trees and take a majority vote.
 This method is also known as a Random Forest classifier.
-The Random Forest classifier found that `r best_params(rf)` reslted in the best  scores.
+The Random Forest classifier found that `r best_params(rf)` resulted in the best  scores.
 It's accuracy when classifying the test data was `r model_accuracy(rf)`.
 
 ### Support Vector Machine
 
 Next a SVM was created to classify the data.
 This algorithm attempts to split the data multiple ways through equations and perfectly divide the genders into their on groups.
-It was found that by altering the penalty parameter C for SVM the model could acheive beter results.
-The SVM classifier found that `r best_params(svm)` reslted in the best  scores.
+It was found that by altering the penalty parameter C for SVM the model could achieve better results.
+The SVM classifier found that `r best_params(svm)` resulted in the best  scores.
 It's accuracy when classifying the test data was `r model_accuracy(svm)`.
 
 Similar to KNN the SVM model then was used with PCA transformed data to attempt to improve the baseline results.
 The performance was best when 13 principal components were used to fit the model.
-The SVM classifier with PCA data found that `r best_params(svm.pca)` reslted in the best  scores.
+The SVM classifier with PCA data found that `r best_params(svm.pca)` resulted in the best  scores.
 It's accuracy when classifying the test data was `r model_accuracy(svm.pca)`.
 
 ### Logistic Regression
@@ -154,8 +154,8 @@ It's accuracy when classifying the test data was `r model_accuracy(svm.pca)`.
 Lastly, a model was built using Logistic Regression.
 The model was fit first with only the raw data.
 The Log Regression model accepted numerous parameters in python.
-TO acheive beter results this model varied the inverse of regularization strength (C), intercept fit, and a penalty value.
-A grid search found that `r best_params(lr)` reslted in the best  scores.
+TO achieve better results this model varied the inverse of regularization strength (C), intercept fit, and a penalty value.
+A grid search found that `r best_params(lr)` resulted in the best  scores.
 It's accuracy when classifying the test data was `r model_accuracy(lr)`.
 
 Rather then apply a PCA transform which resulted in no change in accuracy for the Log Regression model a normalization was applied to the data.
@@ -179,10 +179,10 @@ model_criteria
 As evidenced by the graph above there were a handful of models that did well across all four metrics.
 The best model ended up being the Random Forest classifier. 
 This model was chosen as the best because of it's high marks for Overall Accuracy (2nd), Female Accuracy (1st), and AUC (1st).
-While other models such as KNN using PCA also acheived high scores it came down to the AUC of the Random Forest being so high (`r rf$auc$auc`) and it's high Female accuracy.
+While other models such as KNN using PCA also achieved high scores it came down to the AUC of the Random Forest being so high (`r rf$auc$auc`) and it's high Female accuracy.
 Classifying females voices proved to be a challenge for many of the models as seen by the lower values in the chart above.
 
-The ROC chart below shows how close it was amongst the better models.
+The ROC chart below shows how close it was among the better models.
 While the first two models built (KNN & SVM) were okay, the rest of the models approached the black dot indicating a perfect classification.
 
 ```{r, fig.height=4, fig.width=8}
@@ -191,25 +191,25 @@ model_roc
 
 # Conclusions
 
-This project wound up being a success not only through the learning acheived but the results produced. 
-Multiple models were generated and even acheived good results based on the metrics used for evaluation.
+This project wound up being a success not only through the learning achieved but the results produced. 
+Multiple models were generated and even achieved good results based on the metrics used for evaluation.
 During the execution of this project however a few lessons were learned.
 
 The first was during the EDA phase.
 I wound up spending more time on this step then was necessary.
 This was partly due to finding a data set that was already clean and did not require much work.
 The second lesson was learned while writing the code for the models in python.
-Near the end of the project when time was becoming a factor I realised I might have spread myself thin with models to review.
-A better method could have been to run the base models and then move foward with the best two.
+Near the end of the project when time was becoming a factor I realized I might have spread myself thin with models to review.
+A better method could have been to run the base models and then move forward with the best two.
 Improving only these with the transformations. 
 Given this is a school project done outside of work hours I found myself having to rush through reviewing models just to get them all accounted for.
 
-Moving foward I would continue to refine the Random Forest and KNN (PCA) models.
+Moving forward I would continue to refine the Random Forest and KNN (PCA) models.
 The challenge would be improving the female accuracy first since that is the area that most models struggled in.
 I would also like to gather the raw data and apply models to it as well as the features derived from the audio samples.
 This may prove to make better models if the raw data were used and transformed via PCA or a Fast Fourier transform.
 
 A spin off of this project would be to also identify voice types. 
 Clustering the data into groups and attempting to identify which clusters are tenor or baritone etc.
-I beleive this would result in good results due to the fact that those voice types are divided up based on specific voice features. 
-A machine learnign model would simply automate the process and potntially beat out the human ear for accuracy.
+I believe this would result in good results due to the fact that those voice types are divided up based on specific voice features. 
+A machine learning model would simply automate the process and potentially beat out the human ear for accuracy.

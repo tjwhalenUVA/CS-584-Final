@@ -4,7 +4,8 @@ output:
   flexdashboard::flex_dashboard:
     orientation: columns
     vertical_layout: fill
-css: style.css
+    css: style.css
+    theme: journal
 ---
 
 ```{r setup, include=FALSE}
@@ -19,47 +20,47 @@ Home
 =====================================
 
 ## Column
-<h1><b><center>Gender Classification via Voice</center></b></h1>
-<h3><b><center>Jake Whalen</center></b></h3>
-<h5><b><center>CS 584 Final Project</center></b></h5>
-<h5><b><center>Fall 2017</center></b></h5>
-<b><center>[Start](#summary)</center></b>
+<center>
+<h1><b>Gender Classification via Voice</b></h1>
+<h3>Jake Whalen</h3>
+<h5>CS 584 Final Project</h5>
+<h5>Fall 2017</h5>
+[Start](#summary)
+</center>
 
 Summary
 =====================================
 ## Column
-### 
+###
+<center>
 <font size="5"><b>Choosing a Project</b></font>
+<br>
 <font size="3">
-<ul>
-  <li>Topic? Sports, Beer, Other </li>
-  <li>Supervised or unsupervised learning?</li>
-  <li>Data Source: Download, Web Scrape, Social Media</li>
-  <li>Tools: Python, R, Weka, Tableau, Excel</li>
-</ul>
+Topic? Sports, Beer, Other <br>
+Supervised or unsupervised learning?<br>
+Data Source: Download, Web Scrape, Social Media<br>
+Tools: Python, R, Weka, Tableau, Excel<br>
 </font>
 <br>
 <font size="5"><b>Choice</b></font>
+<br>
 <font size="3">
-<ul>
-  <li>Data from Kaggle</li>
-  <li>Audio Analysis</li>
-  <li>Supervised Learning</li>
-  <li>Classification</li>
-  <li>ML in Python</li>
-  <li>Presentation & Report in R Markdown</li>
-  <li>Excel for results transfer</li>
-</ul>
+Data from Kaggle<br>
+Audio Analysis<br>
+Supervised Learning<br>
+Classification<br>
+ML in Python<br>
+Presentation & Report in R Markdown<br>
+Excel for results transfer<br>
 </font>
 <br>
 <font size="5"><b>Goals</b></font>
+<br>
 <font size="3">
-<ul>
-  <li>Classify audio clip subjects gender</li>
-  <li>Learn what features best seperate gender in audio</li>
-  <li>Look for other potential clusters within the data</li>
-</ul>
+Classify audio clip subjects gender<br>
+Learn what audio features best seperate genders<br>
 </font>
+</center>
 
 Method
 =====================================
@@ -68,10 +69,10 @@ Method
 
 ### <b>Exploration</b>
 <ol>
-  <li>Read the data into R/Python</li>
+  <li>Read data into R</li>
   <li>Ran summary functions on features</li>
-  <li>Plotted the data</li>
-  <li>Look for patterns and relationships between features</li>
+  <li>Plot the data</li>
+  <li>Look for patterns and relationships</li>
   <li>Determine what features seperate genders best</li>
 </ol>
 
@@ -84,7 +85,7 @@ ggplotly(scatterSample) %>%
 
 ## Column
 
-### <b>Classification</b>
+### <b>Classification</b> {data-height=550}
 <ol>
   <li>Used Scikit-learn in Python</li>
   <li>Split the data for training/testing (2/3, 1/3)</li>
@@ -93,15 +94,15 @@ ggplotly(scatterSample) %>%
   <li>Decision Tree (DT)</li>
   <li>Suport Vector Machine (SVM)</li>
   <li>Logistic Regression (Log R)</li>
-  <li>Observed prediction outcomes. Could do better.</li>
-  <li>Attempt to Improve on initial results</li>
+  <li>Observed classifications</li>
+  <li>Attempt to improve on initial results</li>
   <li>KNN: Transform data with PCA</li>
   <li>Decision Tree: Use multiple trees with Random Forest</li>
   <li>SVM: Transform data with PCA</li>
   <li>Log R: Normalized data from 0 to 1 in each feature</li>
 </ol>
 
-###
+###  {data-height=450}
 <img src="C:/Users/e481340/Documents/GMU MASTERS/CS 584/CS584_Final/data/machine-learning.jpg" alt="Machine Learning">
 
 ## Column
@@ -172,7 +173,6 @@ EDA {data-navmenu="Data"}
 genderCount
 ```
 
-
 ### Distributions
 
 ```{r Distributions}
@@ -184,13 +184,6 @@ allDensity
 ```{r}
 allBoxPlot
 ```
-
-
-### T Test
-```{r}
-tTestDT
-```
-
 
 ### Heatmap
 
@@ -210,13 +203,18 @@ oneVall
 p
 ```
 
+### T Test
+```{r}
+tTestDT
+```
+
 
 KNN {data-navmenu="Models"}
 =====================================
 
 ## Column
 
-<h4><b><center>K-Nearest Neighbors</center></b></h4>
+<center><h4><b>K-Nearest Neighbors  [>>>](#decision-tree)</b></h4></center>
 
 ###
 <b>Summary</b>
@@ -261,17 +259,17 @@ Decision Tree {data-navmenu="Models"}
 
 ## Column
 
-<h4><b><center>Decision Tree</center></b></h4>
+<h4><b><center>Decision Tree  [>>>](#svm)</center></b></h4>
 
 ###
 <b>Summary</b>
 <ul>
   <li>Used untransformed data</li>
   <li>MeanFun, sp.ent & IQR account for +90% of feature importance</li>
-  <li><b>Presort:</b> presort the data to speed up the finding of best splits in fitting</li>
-  <li><b>Splitter:</b> The strategy used to choose the split at each node</li>
   <li>Better at identifying males</li>
   <li>Easiest model to interpret (follow the branches)</li>
+  <li><b>Presort:</b> presort the data to speed up the finding of best splits in fitting</li>
+  <li><b>Splitter:</b> The strategy used to choose the split at each node</li>
   <li>[Tree](https://github.com/tjwhalenUVA/CS-584-Final/blob/master/Trees/dt.pdf)</li>
 </ul>
 
@@ -307,13 +305,13 @@ SVM {data-navmenu="Models"}
 =====================================
 ## Column
 
-<h4><b><center>Support Vector Machine</center></b></h4>
+<h4><b><center>Support Vector Machine  [>>>](#log-reg)</center></b></h4>
 
 ###
 <b>Summary</b>
 <ul>
-  <li>Modified penalty parameter to acheive better results</li>
-  <li>Higher penalties acheived better scores</li>
+  <li>Modified penalty parameter to achieve better results</li>
+  <li>Higher penalties achieved better scores</li>
   <li>Better at classifying males</li>
 </ul>
 
@@ -346,7 +344,7 @@ Log Reg {data-navmenu="Models"}
 =====================================
 ## Column
 
-<h4><b><center>Logistic Regression</center></b></h4>
+<h4><b><center>Logistic Regression  [>>>](#random-forest)</center></b></h4>
 
 ###
 <b>Summary</b>
@@ -390,7 +388,7 @@ Random Forest {data-navmenu="Models"}
 
 ## Column
 
-<h4><b><center>Random Forest</center></b></h4>
+<h4><b><center>Random Forest  [>>>](#knn-pca)</center></b></h4>
 
 ###
 <b>Summary</b>
@@ -429,7 +427,7 @@ KNN (PCA) {data-navmenu="Models"}
 =====================================
 ## Column
 
-<h4><b><center>K-Nearest Neighbors (PCA)</center></b></h4>
+<h4><b><center>K-Nearest Neighbors (PCA)  [>>>](#svm-pca)</center></b></h4>
 
 ###
 <b>Summary</b>
@@ -468,14 +466,14 @@ SVM (PCA) {data-navmenu="Models"}
 =====================================
 ## Column
 
-<h4><b><center>Support Vector Machine (PCA)</center></b></h4>
+<h4><b><center>Support Vector Machine (PCA)  [>>>](#log-reg-normal)</center></b></h4>
 
 ###
 <b>Summary</b>
 <ul>
   <li>Improvement over SVM on untransformed data</li>
   <li>Adjusted penalty parameter C of the error term</li>
-  <li>Acheived best performance at much lower penalty parameter levels</li>
+  <li>achieved best performance at much lower penalty parameter levels</li>
 </ul>
 
 <b>Best Parameters</b>
@@ -507,14 +505,14 @@ Log Reg (Normal) {data-navmenu="Models"}
 =====================================
 ## Column
 
-<h4><b><center>Logistic Regression (Normalized)</center></b></h4>
+<h4><b><center>Logistic Regression (Normalized)  [>>>](#conclusions)</center></b></h4>
 
 ###
 <b>Summary</b>
 <ul>
   <li>Performed worse then Log Regression on untransformed data</li>
   <li>Decrease in performance due to decrease in Male accuracy</li>
-  <li>Slight improvement in Female accuracy compared to first Log R</li>
+  <li>Slight improvement in Female accuracy compared to first Log Reg</li>
 </ul>
 
 <b>Best Parameters</b>
@@ -603,37 +601,37 @@ ggplotly(model_roc) %>%
 
 ### <font size="5"><b>Fitting Times</b></font>
 ```{r}
-ggplotly(fit_time.graph) %>%
+ggplotly(fit_time.graph.pres) %>%
   layout(showlegend = FALSE) %>% 
   config(displayModeBar = F)
 ```
 
 ### <font size="5"><b>Scoring Times</b></font>
 ```{r}
-ggplotly(score_time.graph) %>%
+ggplotly(score_time.graph.pres) %>%
   layout(showlegend = FALSE) %>% 
   config(displayModeBar = F)
 ```
 
 
 ### <font size="5"><b>Conclusion</b></font>
+<center>
 <font size="5"><b>Best Model</b></font>
+<br>
 <font size="3">
-<ul>
-  <li>Best Model: Random Forest</li>
-  <li>2nd highest overall accuracy</li>
-  <li>1st Female accuracy</li>
-  <li>Highest Area Under the Curve</li>
-  <li>Decent Fitting Time</li>
-  <li>Faster Scoring Time</li>
-</ul>
+Best Model: Random Forest<br>
+2nd highest overall accuracy<br>
+1st Female accuracy<br>
+Highest Area Under the Curve<br>
+Decent Fitting Time<br>
+Faster Scoring Time<br>
 </font>
 <font size="5"><b>Improvements</b></font>
+<br>
 <font size="3">
-<ul>
-  <li>Focus on a single method</li>
-  <li>Combine features to create new ones</li>
-  <li>Implement more advanced methods (Bagging/Boosting)</li>
-  <li>Extract features from raw aaudio files</li>
-</ul>
+Focus on a single method<br>
+Combine features to create new ones<br>
+Implement more advanced methods (Bagging/Boosting)<br>
+Extract features from raw aaudio files<br>
 </font>
+</center>
